@@ -1,0 +1,159 @@
+[gd_scene load_steps=19 format=3 uid="uid://dw8lcfnktv7mv"]
+
+[ext_resource type="Script" path="res://scripts/world.gd" id="1_7fa2s"]
+[ext_resource type="PackedScene" uid="uid://dukxkjfwv4sap" path="res://scenes/player.tscn" id="2_4vywr"]
+[ext_resource type="Resource" uid="uid://w5yuvrpdvx3k" path="res://inventory/inventory.tres" id="3_v83ji"]
+[ext_resource type="Resource" uid="uid://vsfhctrv3820" path="res://inventory/quick_slot_inventory.tres" id="4_7bn48"]
+[ext_resource type="Script" path="res://inventory/inventory_interface.gd" id="5_1auu5"]
+[ext_resource type="PackedScene" uid="uid://pp77ah6u2djb" path="res://inventory/inventory_scenes/main_inventory.tscn" id="5_ux46h"]
+[ext_resource type="PackedScene" uid="uid://cu78wr4f7155s" path="res://scenes/scene_template.tscn" id="5_xsqmg"]
+[ext_resource type="PackedScene" uid="uid://drejmah8lp647" path="res://inventory/inventory_scenes/inventory_slot.tscn" id="7_wli0u"]
+[ext_resource type="PackedScene" uid="uid://bp6c182x8mldk" path="res://scenes/interactable/chest_staticbody.tscn" id="8_upg36"]
+[ext_resource type="Script" path="res://inventory/inventory_data.gd" id="9_56to4"]
+[ext_resource type="Resource" uid="uid://cuhm3r0mlhurs" path="res://inventory/item/objects/godot.tres" id="10_dadr8"]
+[ext_resource type="Script" path="res://inventory/in_slot_data.gd" id="11_653sy"]
+[ext_resource type="PackedScene" uid="uid://bs0te4ilgfkpw" path="res://scenes/interactable/pickup/canned-food_rigidbody.tscn" id="12_k0p58"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_0j0wh"]
+sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+ground_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+
+[sub_resource type="Sky" id="Sky_22r82"]
+sky_material = SubResource("ProceduralSkyMaterial_0j0wh")
+
+[sub_resource type="Environment" id="Environment_o00h3"]
+background_mode = 2
+background_energy_multiplier = 1.1
+sky = SubResource("Sky_22r82")
+tonemap_mode = 1
+glow_enabled = true
+
+[sub_resource type="Resource" id="Resource_o1761"]
+script = ExtResource("11_653sy")
+item = ExtResource("10_dadr8")
+amount_in_slot = 15
+
+[sub_resource type="Resource" id="Resource_7gatj"]
+script = ExtResource("9_56to4")
+slots_data = Array[ExtResource("11_653sy")]([SubResource("Resource_o1761"), null, null, null, null])
+
+[node name="Main" type="Node3D"]
+script = ExtResource("1_7fa2s")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.866024, -0.433016, 0.250001, 0, 0.499998, 0.866026, -0.500003, 0.749999, -0.43301, 0, 0, 0)
+shadow_enabled = true
+shadow_opacity = 0.85
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_o00h3")
+
+[node name="Player" parent="." instance=ExtResource("2_4vywr")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.79055, -4.76837e-07, -0.879194)
+player_inventory = ExtResource("3_v83ji")
+player_quick_slot = ExtResource("4_7bn48")
+
+[node name="Node3D" parent="." instance=ExtResource("5_xsqmg")]
+
+[node name="Chest" parent="." groups=["external_inventory"] instance=ExtResource("8_upg36")]
+inventory_data = SubResource("Resource_7gatj")
+
+[node name="Canned-food" parent="." instance=ExtResource("12_k0p58")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.39825, 0.319719, -0.331761)
+
+[node name="Canned-food2" parent="." instance=ExtResource("12_k0p58")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.39825, 0.319719, 0.214459)
+
+[node name="Canned-food3" parent="." instance=ExtResource("12_k0p58")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.39825, 1.11009, -0.159173)
+
+[node name="Canned-food4" parent="." instance=ExtResource("12_k0p58")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.08488, 1.11009, -0.159173)
+
+[node name="Canned-food5" parent="." instance=ExtResource("12_k0p58")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.08488, 1.11009, 0.641108)
+
+[node name="Canned-food6" parent="." instance=ExtResource("12_k0p58")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.3692, 1.11009, 0.641108)
+
+[node name="Canned-food7" parent="." instance=ExtResource("12_k0p58")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.80195, 1.11009, 1.03357)
+
+[node name="UI" type="CanvasLayer" parent="."]
+
+[node name="Control" type="Control" parent="UI"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+
+[node name="InventoryInterface" type="Control" parent="UI/Control"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("5_1auu5")
+
+[node name="PlayerInventory" parent="UI/Control/InventoryInterface" instance=ExtResource("5_ux46h")]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -20.0
+offset_top = -179.0
+offset_right = 20.0
+offset_bottom = -139.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="ExternalInventory" parent="UI/Control/InventoryInterface" instance=ExtResource("5_ux46h")]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -20.0
+offset_top = -405.0
+offset_right = 20.0
+offset_bottom = -365.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="PlayerQuickSlot" parent="UI/Control" instance=ExtResource("5_ux46h")]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -20.0
+offset_top = -66.0
+offset_right = 20.0
+offset_bottom = -26.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="GrabbedSlot" parent="UI/Control" instance=ExtResource("7_wli0u")]
+unique_name_in_owner = true
+visible = false
+modulate = Color(1, 1, 1, 0.788235)
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 0
+
+[connection signal="equip_item" from="UI/Control/InventoryInterface" to="UI/Control/InventoryInterface" method="_on_equip_item"]
+[connection signal="gui_input" from="UI/Control/InventoryInterface" to="UI/Control/InventoryInterface" method="_on_gui_input"]
+[connection signal="signal_drop_slot_data" from="UI/Control/InventoryInterface" to="." method="_on_inventory_interface_signal_drop_slot_data"]
+[connection signal="visibility_changed" from="UI/Control/InventoryInterface" to="UI/Control/InventoryInterface" method="_on_visibility_changed"]

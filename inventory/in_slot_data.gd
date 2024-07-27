@@ -3,12 +3,13 @@ extends Resource
 class_name InSlotData
 
 @export var item : ItemData
-@export var amount_in_slot : int = 1
+@export var amount_in_slot : int = 1 : set = _set_amount
+var active_slot_data : bool
 
 func _can_stack_with(other_slot_data : InSlotData) -> bool:
 	return item == other_slot_data.item \
 			and item.stackable \
-			and amount_in_slot < item.max_stack 
+			and amount_in_slot < item.max_stack
 
 func _can_fully_stack_with(other_slot_data : InSlotData) -> bool:
 	return item == other_slot_data.item \

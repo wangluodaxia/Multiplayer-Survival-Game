@@ -2,9 +2,12 @@ class_name StateMachine
 extends Node
 
 @export var current_state : State
+@export var debug_ui : PanelContainer
 var states: Dictionary = {}
 
 func _ready():
+	if not is_multiplayer_authority():
+		return
 	for child in get_children():
 		if child is State:
 			states[child.name] = child
@@ -14,10 +17,14 @@ func _ready():
 	current_state.enter(current_state)
 	
 func _process(delta):
+	if not is_multiplayer_authority():
+		return
 	current_state.update(delta)
-	Global.global_debug.add_property("state", current_state.name, +1)
+	debug_ui.add_property("state", current_state.name, +1)
 	
 func _physics_process(delta):
+	if not is_multiplayer_authority():
+		return
 	current_state.physics_update(delta)
 	
 func on_child_transition(new_state_name: StringName) -> void:
@@ -29,3 +36,11 @@ func on_child_transition(new_state_name: StringName) -> void:
 			current_state = new_state
 	else:
 		push_warning("State does not exist")
+	
+func is_current_state(state_name : StringName) -> bool:
+	if not is_multiplayer_authority():
+		pass
+	if current_state.name == state_name:
+		return true
+	else:
+		return false

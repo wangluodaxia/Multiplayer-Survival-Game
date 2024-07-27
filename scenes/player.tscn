@@ -1,304 +1,1049 @@
-[gd_scene load_steps=23 format=3 uid="uid://dukxkjfwv4sap"]
+[gd_scene load_steps=63 format=3 uid="uid://dukxkjfwv4sap"]
 
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_adhyr"]
-[ext_resource type="PackedScene" uid="uid://jbci8uq5bnyo" path="res://scenes/assault_rifle.tscn" id="2_lyg13"]
-[ext_resource type="Script" path="res://scripts/reticle.gd" id="3_oi4b1"]
-[ext_resource type="Script" path="res://scripts/ui_debug.gd" id="5_c7tx3"]
+[ext_resource type="Resource" uid="uid://w5yuvrpdvx3k" path="res://inventory/inventory.tres" id="2_xq8ps"]
+[ext_resource type="Resource" uid="uid://vsfhctrv3820" path="res://inventory/quick_slot_inventory.tres" id="3_yc7co"]
+[ext_resource type="PackedScene" uid="uid://m8lgl6sgjc8e" path="res://scenes/item.tscn" id="4_dcn20"]
+[ext_resource type="Resource" uid="uid://c0tuqwnt3g8u0" path="res://scripts/weapon/assault_rifle_spread.tres" id="4_qxsc1"]
+[ext_resource type="AnimationLibrary" uid="uid://cbdt7intcw3pe" path="res://anims/player_state.res" id="5_7m1j8"]
+[ext_resource type="Script" path="res://scripts/interface/reticle.gd" id="5_8lwt1"]
+[ext_resource type="Script" path="res://scripts/player_input_synchronizer.gd" id="5_d8soy"]
+[ext_resource type="Script" path="res://scripts/View_Models.gd" id="5_fwk6d"]
 [ext_resource type="Theme" uid="uid://d25a7utqv5i8e" path="res://ui_debug_theme.tres" id="5_js7jf"]
 [ext_resource type="Script" path="res://scripts/player state machine/state_machine.gd" id="6_28k2k"]
+[ext_resource type="ArrayMesh" uid="uid://bcd75ewieh241" path="res://models/meshes/fp_arms.res" id="6_a0imf"]
+[ext_resource type="Script" path="res://scripts/weapon/FP_player_weapon.gd" id="6_an6qp"]
+[ext_resource type="Script" path="res://scripts/interface/ui_debug.gd" id="7_6mltq"]
+[ext_resource type="Shader" path="res://materials/viewmodel.gdshader" id="7_dn15t"]
 [ext_resource type="Script" path="res://scripts/player state machine/idle_state.gd" id="7_pfe0v"]
+[ext_resource type="AnimationLibrary" uid="uid://vlrhvjddwkvd" path="res://anims/player_fp_anims/Axe/Axe_Player_Anims.res" id="7_u4bc2"]
+[ext_resource type="AnimationLibrary" uid="uid://klxtl5jvpkhp" path="res://anims/player_fp_anims/Pickaxe/Pickaxe_Player_Anims.res" id="8_4v63h"]
 [ext_resource type="Script" path="res://scripts/player state machine/walking_state.gd" id="8_w2o86"]
+[ext_resource type="PackedScene" uid="uid://mdsqpmcb7k53" path="res://scenes/progress_bar.tscn" id="9_bcxkl"]
+[ext_resource type="Script" path="res://inventory/inventory_interface.gd" id="9_sd5qi"]
 [ext_resource type="Script" path="res://scripts/player state machine/sprint_state.gd" id="9_touqc"]
 [ext_resource type="Script" path="res://scripts/player state machine/crouch_state.gd" id="10_0am0j"]
+[ext_resource type="PackedScene" uid="uid://pp77ah6u2djb" path="res://inventory/inventory_scenes/main_inventory.tscn" id="10_51sge"]
+[ext_resource type="Script" path="res://inventory/item/inv_item_info_panel.gd" id="10_pwj6i"]
 [ext_resource type="Script" path="res://scripts/player state machine/jump_state.gd" id="11_juquo"]
+[ext_resource type="PackedScene" uid="uid://c0vow3q82yehc" path="res://scenes/weapon_hud.tscn" id="12_2ffht"]
+[ext_resource type="AnimationLibrary" uid="uid://dmkk5nftmxg6" path="res://anims/item_fp_anims/pickaxe/Pickaxe_Anims.res" id="12_2kaya"]
+[ext_resource type="ArrayMesh" uid="uid://cxut6xfety7ab" path="res://models/meshes/pickaxe_animated.res" id="12_fkleo"]
+[ext_resource type="Script" path="res://scripts/interface/slot.gd" id="12_vifhc"]
+[ext_resource type="PackedScene" uid="uid://cq5gdhexp333" path="res://inventory/craft_menu_scenes/craft_menu.tscn" id="13_00r71"]
+[ext_resource type="PackedScene" uid="uid://drejmah8lp647" path="res://inventory/inventory_scenes/inventory_slot.tscn" id="13_6ejrl"]
+[ext_resource type="Texture2D" uid="uid://d37gvltmegoym" path="res://textures/1024_palette.png" id="14_rjuv0"]
+[ext_resource type="AnimationLibrary" uid="uid://dcl0nhikpge30" path="res://anims/item_fp_anims/axe/Axe_Anims.res" id="15_1ws1i"]
+[ext_resource type="ArrayMesh" uid="uid://c0qee1sc38nvk" path="res://models/meshes/axe_animated.res" id="15_yc44n"]
+[ext_resource type="ArrayMesh" uid="uid://igcmuna1ilc8" path="res://models/meshes/m4_rifle.res" id="17_87spy"]
+[ext_resource type="Script" path="res://scripts/player state machine/falling_state.gd" id="21_h51by"]
+[ext_resource type="AnimationLibrary" uid="uid://daohau8af7uyl" path="res://anims/item_fp_anims/m4_rifle/M4_Rifle_Anims.res" id="41_aeuon"]
+[ext_resource type="AnimationLibrary" uid="uid://c5ohgn7l2bmpy" path="res://anims/player_fp_anims/m4_rifle/FP_Armature.res" id="42_0yrtw"]
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_n3lfe"]
+properties/0/path = NodePath(".:position")
+properties/0/spawn = true
+properties/0/replication_mode = 2
+properties/1/path = NodePath(".:rotation")
+properties/1/spawn = true
+properties/1/replication_mode = 2
+properties/2/path = NodePath(".:velocity")
+properties/2/spawn = true
+properties/2/replication_mode = 2
+properties/3/path = NodePath(".:peer_id")
+properties/3/spawn = true
+properties/3/replication_mode = 0
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_8ul1l"]
+properties/0/path = NodePath(".:input_direction")
+properties/0/spawn = false
+properties/0/replication_mode = 1
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_7qfu8"]
 
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_lh2ax"]
-height = 1.0
-
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_f7gol"]
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_g0hrd"]
+
 [sub_resource type="SphereShape3D" id="SphereShape3D_c1c83"]
+radius = 0.6
 
-[sub_resource type="Animation" id="Animation_ntt5p"]
-resource_name = "Assault Rifle Activate"
-length = 0.5
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Rifle:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.5),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Vector3(0, -0.265, -0.095), Vector3(0, 0, 0)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Rifle:visible")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.025),
-"transitions": PackedFloat32Array(1, 1),
-"update": 1,
-"values": [false, true]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("Rifle:rotation")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0, 0.5),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Vector3(-0.645772, -0.794125, 0), Vector3(0, -1.5708, 0)]
-}
+[sub_resource type="Skin" id="Skin_jlae2"]
+resource_name = "Skin"
+bind_count = 53
+bind/0/name = &"spine.002"
+bind/0/bone = -1
+bind/0/pose = Transform3D(1, 0, 0, 0, 0.999494, -0.0318125, 0, 0.0318126, 0.999494, 4.2339e-09, -1.29226, -0.0407307)
+bind/1/name = &"spine.003"
+bind/1/bone = -1
+bind/1/pose = Transform3D(1, 0, 0, 0, 0.999592, -0.0285597, 0, 0.0285598, 0.999592, 4.2339e-09, -1.46527, -0.0359625)
+bind/2/name = &"shoulder.L"
+bind/2/bone = -1
+bind/2/pose = Transform3D(0.507095, -7.36676e-05, 0.86189, 0.86189, -0.000570795, -0.507095, 0.000529289, 1, -0.000225891, -0.0681149, 0.0198289, -1.60509)
+bind/3/name = &"upper_arm.L"
+bind/3/bone = -1
+bind/3/pose = Transform3D(-0.469217, -0.883031, 0.0095971, 0.861266, -0.459999, -0.215922, 0.19508, -0.0930483, 0.976364, 1.49114, 0.554944, 0.135414)
+bind/4/name = &"forearm.L"
+bind/4/bone = -1
+bind/4/pose = Transform3D(-0.562138, -0.827038, 0.00310245, 0.818233, -0.555599, 0.147667, -0.120403, 0.085548, 0.989032, 1.45027, 0.458821, 0.0164279)
+bind/5/name = &"hand.L"
+bind/5/bone = -1
+bind/5/pose = Transform3D(-0.589082, -0.808061, -0.00431717, 0.803703, -0.586443, 0.100732, -0.0839293, 0.0558697, 0.994904, 1.44284, 0.242266, 0.0314896)
+bind/6/name = &"palm.01.L"
+bind/6/bone = -1
+bind/6/pose = Transform3D(0.346599, -0.00733423, -0.937985, 0.689773, -0.675668, 0.260164, -0.635675, -0.737169, -0.229127, -0.24679, 0.399166, 1.3851)
+bind/7/name = &"f_index.01.L"
+bind/7/bone = -1
+bind/7/pose = Transform3D(0.273228, 0.0419236, -0.961035, 0.707446, -0.685714, 0.171218, -0.651818, -0.726662, -0.217015, -0.254899, 0.341581, 1.38378)
+bind/8/name = &"f_index.02.L"
+bind/8/bone = -1
+bind/8/pose = Transform3D(0.278745, -0.0241753, -0.960061, 0.535678, -0.825808, 0.176324, -0.797089, -0.563433, -0.217239, -0.177662, 0.614665, 1.29176)
+bind/9/name = &"f_index.03.L"
+bind/9/bone = -1
+bind/9/pose = Transform3D(0.332163, -0.00894687, -0.94318, 0.498393, -0.847296, 0.183558, -0.800795, -0.531046, -0.276981, -0.23705, 0.640036, 1.25591)
+bind/10/name = &"thumb.01.L"
+bind/10/bone = -1
+bind/10/pose = Transform3D(0.986458, -0.0498275, 0.156266, -0.138606, -0.76264, 0.631798, 0.0876936, -0.644902, -0.759218, -0.597001, 1.08866, 0.757891)
+bind/11/name = &"thumb.02.L"
+bind/11/bone = -1
+bind/11/pose = Transform3D(0.989612, -0.0684899, 0.126402, -0.103084, -0.950905, 0.29181, 0.100211, -0.301809, -0.948087, -0.575426, 1.26281, 0.319321)
+bind/12/name = &"thumb.03.L"
+bind/12/bone = -1
+bind/12/pose = Transform3D(0.994019, -0.0689399, 0.0846964, -0.0888903, -0.961298, 0.260778, 0.0634407, -0.266747, -0.961676, -0.577103, 1.23315, 0.300986)
+bind/13/name = &"palm.02.L"
+bind/13/bone = -1
+bind/13/pose = Transform3D(0.0744008, -0.0649164, -0.995113, 0.732108, -0.674, 0.098705, -0.677114, -0.735874, -0.00262038, -0.00594773, 0.362031, 1.41984)
+bind/14/name = &"f_middle.01.L"
+bind/14/bone = -1
+bind/14/pose = Transform3D(0.0983505, -0.0460424, -0.994086, 0.7754, -0.622586, 0.10555, -0.623764, -0.781196, -0.0255304, -0.0471881, 0.210382, 1.43644)
+bind/15/name = &"f_middle.02.L"
+bind/15/bone = -1
+bind/15/pose = Transform3D(0.0801672, -0.0823439, -0.993375, 0.644204, -0.756209, 0.114673, -0.760641, -0.649129, -0.00757681, 0.0113574, 0.440295, 1.37928)
+bind/16/name = &"f_middle.03.L"
+bind/16/bone = -1
+bind/16/pose = Transform3D(0.0511024, -0.112859, -0.992296, 0.603449, -0.78821, 0.120724, -0.795763, -0.604969, 0.0278253, 0.0709899, 0.481811, 1.35438)
+bind/17/name = &"palm.03.L"
+bind/17/bone = -1
+bind/17/pose = Transform3D(-0.0438125, -0.0232252, -0.99877, 0.756551, -0.653688, -0.0179867, -0.652466, -0.756408, 0.0462107, 0.00402394, 0.314403, 1.43115)
+bind/18/name = &"f_ring.01.L"
+bind/18/bone = -1
+bind/18/pose = Transform3D(0.00484277, -0.0172849, -0.999839, 0.757995, -0.65209, 0.0149443, -0.652243, -0.757945, 0.00994391, -0.0394126, 0.2569, 1.43082)
+bind/19/name = &"f_ring.02.L"
+bind/19/bone = -1
+bind/19/pose = Transform3D(0.0233441, -0.0585421, -0.998012, 0.642016, -0.764352, 0.0598528, -0.766336, -0.642137, 0.0197419, -0.00280316, 0.45061, 1.3765)
+bind/20/name = &"f_ring.03.L"
+bind/20/bone = -1
+bind/20/pose = Transform3D(0.0227983, -0.0589525, -0.998001, 0.576852, -0.814546, 0.0612931, -0.816531, -0.577096, 0.0154367, -0.0018795, 0.534347, 1.3371)
+bind/21/name = &"palm.04.L"
+bind/21/bone = -1
+bind/21/pose = Transform3D(-0.186305, -0.0119929, -0.982419, 0.714021, -0.68851, -0.127002, -0.674882, -0.725128, 0.136836, 0.0705635, 0.382548, 1.41163)
+bind/22/name = &"f_pinky.01.L"
+bind/22/bone = -1
+bind/22/pose = Transform3D(-0.244304, -0.0601344, -0.967833, 0.63769, -0.761867, -0.113631, -0.730526, -0.644937, 0.224474, 0.174379, 0.477393, 1.3592)
+bind/23/name = &"f_pinky.02.L"
+bind/23/bone = -1
+bind/23/pose = Transform3D(-0.266964, -0.0468438, -0.962567, 0.577617, -0.807304, -0.120912, -0.771421, -0.588274, 0.242579, 0.175304, 0.555766, 1.32127)
+bind/24/name = &"f_pinky.03.L"
+bind/24/bone = -1
+bind/24/pose = Transform3D(-0.263703, -0.103269, -0.95906, 0.528111, -0.84746, -0.0539574, -0.807193, -0.520718, 0.278015, 0.241727, 0.624983, 1.26937)
+bind/25/name = &"shoulder.R"
+bind/25/bone = -1
+bind/25/pose = Transform3D(0.507095, 7.35876e-05, -0.86189, -0.86189, -0.000570773, -0.507095, -0.000529269, 1, -0.000225983, 0.068115, 0.0198288, -1.60509)
+bind/26/name = &"upper_arm.R"
+bind/26/bone = -1
+bind/26/pose = Transform3D(-0.469217, 0.883031, -0.00959715, -0.861266, -0.459999, -0.215921, -0.19508, -0.0930483, 0.976364, -1.49115, 0.554944, 0.135414)
+bind/27/name = &"forearm.R"
+bind/27/bone = -1
+bind/27/pose = Transform3D(-0.562138, 0.827038, -0.00310247, -0.818233, -0.555599, 0.147667, 0.120403, 0.085548, 0.989032, -1.45027, 0.458821, 0.0164279)
+bind/28/name = &"hand.R"
+bind/28/bone = -1
+bind/28/pose = Transform3D(-0.589083, 0.808062, 0.00431717, -0.803703, -0.586443, 0.100732, 0.0839293, 0.0558697, 0.994904, -1.44284, 0.242266, 0.0314897)
+bind/29/name = &"palm.01.R"
+bind/29/bone = -1
+bind/29/pose = Transform3D(0.346599, 0.00733427, 0.937985, -0.689773, -0.675669, 0.260164, 0.635675, -0.737169, -0.229127, 0.24679, 0.399167, 1.3851)
+bind/30/name = &"f_index.01.R"
+bind/30/bone = -1
+bind/30/pose = Transform3D(0.273228, -0.0419236, 0.961035, -0.707446, -0.685715, 0.171218, 0.651818, -0.726662, -0.217015, 0.254899, 0.341581, 1.38378)
+bind/31/name = &"f_index.02.R"
+bind/31/bone = -1
+bind/31/pose = Transform3D(0.278745, 0.0241753, 0.960061, -0.535678, -0.825808, 0.176324, 0.797089, -0.563433, -0.217239, 0.177662, 0.614665, 1.29177)
+bind/32/name = &"f_index.03.R"
+bind/32/bone = -1
+bind/32/pose = Transform3D(0.332163, 0.00894686, 0.94318, -0.498393, -0.847296, 0.183558, 0.800795, -0.531046, -0.276981, 0.23705, 0.640036, 1.25591)
+bind/33/name = &"thumb.01.R"
+bind/33/bone = -1
+bind/33/pose = Transform3D(0.986458, 0.0498274, -0.156266, 0.138606, -0.76264, 0.631798, -0.0876936, -0.644902, -0.759218, 0.597001, 1.08866, 0.757891)
+bind/34/name = &"thumb.02.R"
+bind/34/bone = -1
+bind/34/pose = Transform3D(0.989612, 0.0684899, -0.126402, 0.103084, -0.950905, 0.29181, -0.100211, -0.301809, -0.948087, 0.575426, 1.26281, 0.319321)
+bind/35/name = &"thumb.03.R"
+bind/35/bone = -1
+bind/35/pose = Transform3D(0.994019, 0.0689399, -0.0846964, 0.0888905, -0.961298, 0.260778, -0.0634407, -0.266747, -0.961676, 0.577103, 1.23315, 0.300987)
+bind/36/name = &"palm.02.R"
+bind/36/bone = -1
+bind/36/pose = Transform3D(0.0744008, 0.0649163, 0.995113, -0.732107, -0.674, 0.0987051, 0.677114, -0.735874, -0.00262039, 0.00594776, 0.362032, 1.41984)
+bind/37/name = &"f_middle.01.R"
+bind/37/bone = -1
+bind/37/pose = Transform3D(0.0983505, 0.0460424, 0.994086, -0.7754, -0.622586, 0.10555, 0.623764, -0.781196, -0.0255304, 0.0471881, 0.210382, 1.43644)
+bind/38/name = &"f_middle.02.R"
+bind/38/bone = -1
+bind/38/pose = Transform3D(0.0801671, 0.0823438, 0.993375, -0.644204, -0.756209, 0.114673, 0.760641, -0.649129, -0.00757678, -0.0113575, 0.440295, 1.37928)
+bind/39/name = &"f_middle.03.R"
+bind/39/bone = -1
+bind/39/pose = Transform3D(0.0511024, 0.112859, 0.992296, -0.603449, -0.78821, 0.120724, 0.795763, -0.604969, 0.0278252, -0.0709899, 0.481811, 1.35438)
+bind/40/name = &"palm.03.R"
+bind/40/bone = -1
+bind/40/pose = Transform3D(-0.0438125, 0.0232251, 0.99877, -0.756551, -0.653688, -0.0179866, 0.652466, -0.756408, 0.0462107, -0.0040239, 0.314403, 1.43115)
+bind/41/name = &"f_ring.01.R"
+bind/41/bone = -1
+bind/41/pose = Transform3D(0.00484277, 0.0172849, 0.999839, -0.757995, -0.65209, 0.0149443, 0.652243, -0.757945, 0.00994393, 0.0394125, 0.2569, 1.43082)
+bind/42/name = &"f_ring.02.R"
+bind/42/bone = -1
+bind/42/pose = Transform3D(0.0233441, 0.0585421, 0.998012, -0.642016, -0.764352, 0.0598529, 0.766336, -0.642137, 0.0197419, 0.00280314, 0.45061, 1.3765)
+bind/43/name = &"f_ring.03.R"
+bind/43/bone = -1
+bind/43/pose = Transform3D(0.0227982, 0.0589525, 0.998, -0.576852, -0.814546, 0.0612931, 0.816531, -0.577096, 0.0154367, 0.00187949, 0.534347, 1.3371)
+bind/44/name = &"palm.04.R"
+bind/44/bone = -1
+bind/44/pose = Transform3D(-0.186305, 0.0119929, 0.982419, -0.71402, -0.68851, -0.127001, 0.674882, -0.725128, 0.136836, -0.0705634, 0.382549, 1.41163)
+bind/45/name = &"f_pinky.01.R"
+bind/45/bone = -1
+bind/45/pose = Transform3D(-0.244304, 0.0601344, 0.967832, -0.637689, -0.761867, -0.113631, 0.730526, -0.644937, 0.224474, -0.174379, 0.477393, 1.3592)
+bind/46/name = &"f_pinky.02.R"
+bind/46/bone = -1
+bind/46/pose = Transform3D(-0.266964, 0.0468438, 0.962567, -0.577617, -0.807304, -0.120912, 0.771421, -0.588274, 0.242579, -0.175304, 0.555767, 1.32127)
+bind/47/name = &"f_pinky.03.R"
+bind/47/bone = -1
+bind/47/pose = Transform3D(-0.263703, 0.103269, 0.95906, -0.52811, -0.84746, -0.0539572, 0.807193, -0.520718, 0.278015, -0.241727, 0.624983, 1.26937)
+bind/48/name = &"camera"
+bind/48/bone = -1
+bind/48/pose = Transform3D(1, 0, 0, 0, -2.23517e-08, -1, 0, 1, 7.45058e-09, 4.2339e-09, -0.0104416, -1.69944)
+bind/49/name = &"IK_Handle_Arm.L"
+bind/49/bone = -1
+bind/49/pose = Transform3D(0.818232, -0.555599, 0.147667, 0.562138, 0.827038, -0.00310253, -0.120403, 0.085548, 0.989032, 0.194741, -1.45027, 0.016428)
+bind/50/name = &"Pole_Target_Elbow.L"
+bind/50/bone = -1
+bind/50/pose = Transform3D(-0.46242, -0.886661, 0, 0, 0, -1, 0.886661, -0.46242, 0, 1.49257, -0.522115, 0.280135)
+bind/51/name = &"IK_Handle_Arm.R"
+bind/51/bone = -1
+bind/51/pose = Transform3D(0.818232, 0.555599, -0.147667, -0.562138, 0.827038, -0.00310253, 0.120403, 0.085548, 0.989032, -0.194741, -1.45027, 0.016428)
+bind/52/name = &"Pole_Target_Elbow.R"
+bind/52/bone = -1
+bind/52/pose = Transform3D(-0.46242, 0.886661, 0, 0, 0, -1, -0.886661, -0.46242, 0, -1.49257, -0.522115, 0.280135)
 
-[sub_resource type="Animation" id="Animation_sgdrs"]
-resource_name = "Assault Rifle Deactivate"
-length = 0.5
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Rifle:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.5),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Vector3(0, 0, 0), Vector3(0, -0.265, -0.095)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Rifle:visible")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.5),
-"transitions": PackedFloat32Array(1, 1),
-"update": 1,
-"values": [true, false]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("Rifle:rotation")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0, 0.5),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Vector3(0, -1.5708, 0), Vector3(-0.645772, -0.794125, 0)]
-}
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_mujtk"]
+resource_name = "arms"
+render_priority = 0
+shader = ExtResource("7_dn15t")
+shader_parameter/albedo = Color(0.798055, 0.510785, 0.385682, 1)
+shader_parameter/specular = 0.5
+shader_parameter/metallic = 0.0
+shader_parameter/roughness = 1.0
+shader_parameter/metallic_texture_channel = Vector4(1, 0, 0, 0)
+shader_parameter/roughness_texture_channel = Vector4(1, 0, 0, 0)
+shader_parameter/normal_scale = 0.5
+shader_parameter/uv1_scale = Vector3(1, 1, 1)
+shader_parameter/uv1_offset = Vector3(0, 0, 0)
 
-[sub_resource type="Animation" id="Animation_cypf8"]
-resource_name = "Assault Rifle Reload"
-length = 2.7
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Rifle:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.4, 0.8, 1.2, 1.6, 1.9, 2.3, 2.7),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
-"update": 0,
-"values": [Vector3(0, 0, 0), Vector3(0.01, -0.105, -0.165), Vector3(0.01, -0.108, -0.165), Vector3(0.01, -0.055, -0.165), Vector3(-0.023, -0.102, -0.17), Vector3(0.068, -0.091, -0.192), Vector3(0.138, -0.171, -0.192), Vector3(0, 0, 0)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Rifle:rotation")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.4, 0.8, 1.2, 1.6, 1.9, 2.3, 2.7),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
-"update": 0,
-"values": [Vector3(0, -1.5708, 0), Vector3(-0.296706, -0.506145, 0), Vector3(-0.296706, -0.506145, 0.485202), Vector3(-0.296706, -0.506145, -0.794125), Vector3(-0.284489, -0.574213, -0.862193), Vector3(-0.237365, -0.849975, 0.614356), Vector3(-0.115192, -0.867429, 0.727802), Vector3(0, -1.5708, 0)]
-}
+[sub_resource type="Skin" id="Skin_illik"]
+resource_name = "Skin"
+bind_count = 1
+bind/0/name = &"Body"
+bind/0/bone = -1
+bind/0/pose = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
 
-[sub_resource type="Animation" id="Animation_ot87e"]
-resource_name = "Assault Rifle Shoot"
-length = 0.2
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Rifle:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.2),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 0,
-"values": [Vector3(0, 0, 0), Vector3(-0.04, 0.02, 0), Vector3(0, 0, 0)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Rifle:rotation")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.2),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 0,
-"values": [Vector3(0, -1.5708, 0), Vector3(0.00698132, -1.53938, -0.0279253), Vector3(0, -1.5708, 0)]
-}
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_xspd5"]
+resource_local_to_scene = true
+resource_name = "Material"
+render_priority = 0
+shader = ExtResource("7_dn15t")
+shader_parameter/albedo = Color(1, 1, 1, 1)
+shader_parameter/specular = 0.5
+shader_parameter/metallic = 0.0
+shader_parameter/roughness = 1.0
+shader_parameter/metallic_texture_channel = Vector4(1, 0, 0, 0)
+shader_parameter/roughness_texture_channel = Vector4(1, 0, 0, 0)
+shader_parameter/normal_scale = 0.5
+shader_parameter/uv1_scale = Vector3(1, 1, 1)
+shader_parameter/uv1_offset = Vector3(0, 0, 0)
+shader_parameter/texture_albedo = ExtResource("14_rjuv0")
 
-[sub_resource type="Animation" id="Animation_1q8uh"]
-resource_name = "Assault Rifle out of ammo"
-length = 0.2
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Rifle:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.2),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 0,
-"values": [Vector3(0, 0, 0), Vector3(0, -0.01, 0), Vector3(0, 0, 0)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Rifle:rotation")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.2),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 0,
-"values": [Vector3(0, -1.5708, 0), Vector3(0.00698132, -1.50098, 0), Vector3(0, -1.5708, 0)]
-}
+[sub_resource type="Skin" id="Skin_u0wcu"]
+resource_name = "Skin"
+bind_count = 1
+bind/0/name = &"Body"
+bind/0/bone = -1
+bind/0/pose = Transform3D(6.43321, 0, 0, 0, 6.43321, 0, 0, 0, 6.43321, 0.0911439, 0.570043, 0)
 
-[sub_resource type="Animation" id="Animation_hvc3l"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_x4ycf"]
+resource_local_to_scene = true
+resource_name = "Material"
+render_priority = 0
+shader = ExtResource("7_dn15t")
+shader_parameter/albedo = Color(1, 1, 1, 1)
+shader_parameter/specular = 0.5
+shader_parameter/metallic = 0.0
+shader_parameter/roughness = 1.0
+shader_parameter/metallic_texture_channel = Vector4(1, 0, 0, 0)
+shader_parameter/roughness_texture_channel = Vector4(1, 0, 0, 0)
+shader_parameter/normal_scale = 0.5
+shader_parameter/uv1_scale = Vector3(1, 1, 1)
+shader_parameter/uv1_offset = Vector3(0, 0, 0)
+shader_parameter/texture_albedo = ExtResource("14_rjuv0")
+
+[sub_resource type="Skin" id="Skin_06u7v"]
+resource_name = "Skin"
+bind_count = 3
+bind/0/name = &"Body_2"
+bind/0/bone = -1
+bind/0/pose = Transform3D(3.90229e-08, 0.938352, 0.34568, -7.131e-07, -0.34568, 0.938352, 0.999998, -9.75465e-08, 1.86386e-07, 0.000316759, 0.0390457, 9.81855e-10)
+bind/1/name = &"Barrel"
+bind/1/bone = -1
+bind/1/pose = Transform3D(-1.07671e-07, 0.221532, 0.975153, -3.28055e-07, -0.975153, 0.221532, 0.999999, -1.10476e-07, -2.91594e-07, -0.101418, -0.210509, 3.79989e-08)
+bind/2/name = &"Magazine"
+bind/2/bone = -1
+bind/2/pose = Transform3D(8.36455e-07, 0.922135, -0.386868, -5.40477e-07, 0.386868, 0.922135, 0.999998, -3.76656e-07, 3.52727e-07, 0.132837, 0.0882966, -5.13419e-08)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_j48hl"]
+resource_local_to_scene = true
+resource_name = "Material"
+render_priority = 0
+shader = ExtResource("7_dn15t")
+shader_parameter/albedo = Color(1, 1, 1, 1)
+shader_parameter/specular = 0.5
+shader_parameter/metallic = 0.0
+shader_parameter/roughness = 1.0
+shader_parameter/metallic_texture_channel = Vector4(1, 0, 0, 0)
+shader_parameter/roughness_texture_channel = Vector4(1, 0, 0, 0)
+shader_parameter/normal_scale = 0.5
+shader_parameter/uv1_scale = Vector3(1, 1, 1)
+shader_parameter/uv1_offset = Vector3(0, 0, 0)
+shader_parameter/texture_albedo = ExtResource("14_rjuv0")
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_yqpty"]
+
+[sub_resource type="Animation" id="Animation_0it08"]
 length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Rifle:position")
+tracks/0/path = NodePath("%Item:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector3(0, 0, 0)]
+"values": [Vector3(0.04, -0.61, -0.545)]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Rifle:visible")
+tracks/1/path = NodePath("%Item:rotation")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [true]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("Rifle:rotation")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector3(0, -1.5708, 0)]
+"values": [Vector3(0.00872666, 2.7838, -0.802851)]
 }
 
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_lus2o"]
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_jnhb8"]
 _data = {
-"Assault Rifle Activate": SubResource("Animation_ntt5p"),
-"Assault Rifle Deactivate": SubResource("Animation_sgdrs"),
-"Assault Rifle Reload": SubResource("Animation_cypf8"),
-"Assault Rifle Shoot": SubResource("Animation_ot87e"),
-"Assault Rifle out of ammo": SubResource("Animation_1q8uh"),
-"RESET": SubResource("Animation_hvc3l")
+"RESET": SubResource("Animation_0it08")
 }
 
-[node name="Player" type="CharacterBody3D"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8m1o6"]
+bg_color = Color(1, 1, 1, 0)
+border_width_bottom = 2
+border_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+expand_margin_bottom = 2.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3tcom"]
+bg_color = Color(0.12549, 0.12549, 0.12549, 0.796078)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_sfy83"]
+bg_color = Color(0, 0.611765, 0.286275, 1)
+corner_radius_top_left = 1
+corner_radius_top_right = 1
+corner_radius_bottom_right = 1
+corner_radius_bottom_left = 1
+anti_aliasing_size = 0.979
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_27v0r"]
+bg_color = Color(0.435294, 0.435294, 0.435294, 0.490196)
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hi0ux"]
+bg_color = Color(0.231373, 0.231373, 0.231373, 1)
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_xqr46"]
+
+[node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("weapon_holder")]
+collision_layer = 2
+collision_mask = 6345
 script = ExtResource("1_adhyr")
+player_inventory = ExtResource("2_xq8ps")
+player_quick_slot = ExtResource("3_yc7co")
+weapon_spread_data = Array[Resource("res://scripts/weapon/weapon_spread_data.gd")]([ExtResource("4_qxsc1")])
+weapon_holder = NodePath("CameraHolder/RigHolder")
+weapon_sway_amount = 0.001
+weapon_rotation_amount = 0.001
+invert_weapon_sway = true
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+unique_name_in_owner = true
+replication_config = SubResource("SceneReplicationConfig_n3lfe")
+
+[node name="InputSync" type="MultiplayerSynchronizer" parent="." node_paths=PackedStringArray("player")]
+unique_name_in_owner = true
+root_path = NodePath(".")
+replication_config = SubResource("SceneReplicationConfig_8ul1l")
+script = ExtResource("5_d8soy")
+player = NodePath("..")
 
 [node name="DefaultStateCollision" type="CollisionShape3D" parent="."]
 unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 shape = SubResource("CapsuleShape3D_7qfu8")
 
-[node name="CrouchStateCollision" type="CollisionShape3D" parent="."]
-unique_name_in_owner = true
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
-shape = SubResource("CapsuleShape3D_lh2ax")
-disabled = true
-
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00398284, 0.994013, 0.00473261)
-visible = false
+cast_shadow = 0
 mesh = SubResource("CapsuleMesh_f7gol")
 skeleton = NodePath("../DefaultStateCollision")
+surface_material_override/0 = SubResource("StandardMaterial3D_g0hrd")
 
 [node name="ShapeCast3D" type="ShapeCast3D" parent="."]
 unique_name_in_owner = true
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.5, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.58794e-09, 1.5, -3.72529e-09)
 shape = SubResource("SphereShape3D_c1c83")
+target_position = Vector3(0, 0, 0)
+max_results = 4
+collision_mask = 6297
 
 [node name="CameraHolder" type="Node3D" parent="."]
 unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.65, 0)
 
-[node name="ArmsHolder" type="Node3D" parent="CameraHolder"]
-transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.145, -0.257, -0.247)
-
-[node name="ItemsHolder" type="Node3D" parent="CameraHolder/ArmsHolder"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.29, -0.365, 0.165)
-
-[node name="Rifle" parent="CameraHolder/ArmsHolder" instance=ExtResource("2_lyg13")]
-transform = Transform3D(-3.61999e-06, 0, -1, 0, 1, 0, 1, 0, -3.61999e-06, 0, 0, 0)
-visible = true
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="CameraHolder/ArmsHolder"]
-libraries = {
-"": SubResource("AnimationLibrary_lus2o")
-}
-
 [node name="Camera3D" type="Camera3D" parent="CameraHolder"]
 unique_name_in_owner = true
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.118783, 0)
-
-[node name="ReflectionProbe" type="ReflectionProbe" parent="CameraHolder/Camera3D"]
-visible = false
-enable_shadows = true
+transform = Transform3D(1, -8.74228e-08, 8.74228e-08, 8.74228e-08, 1, 1.70371e-07, -8.74228e-08, -1.70371e-07, 1, 5.14674e-09, 0.049438, 0.0104416)
 
 [node name="InteractRay" type="RayCast3D" parent="CameraHolder/Camera3D"]
+unique_name_in_owner = true
 target_position = Vector3(0, 0, -2.5)
-collision_mask = 4
+collision_mask = 12
+debug_shape_thickness = 1
 
-[node name="Interface" type="Control" parent="."]
+[node name="AimCast" type="RayCast3D" parent="CameraHolder/Camera3D"]
+unique_name_in_owner = true
+transform = Transform3D(1, 8.74228e-08, -8.74228e-08, -8.74228e-08, 1, -8.29485e-08, 8.74228e-08, 8.29485e-08, 1, 0, 0, 0)
+target_position = Vector3(0, 0, -1000)
+collision_mask = 6395
+debug_shape_thickness = 1
+
+[node name="MeleeCast" type="RayCast3D" parent="CameraHolder/Camera3D"]
+unique_name_in_owner = true
+transform = Transform3D(1, 8.74228e-08, -8.74228e-08, -8.74228e-08, 1, -8.29485e-08, 8.74228e-08, 8.29485e-08, 1, 0, 0, 0)
+target_position = Vector3(0, 0, -2.5)
+collision_mask = 6363
+debug_shape_thickness = 1
+
+[node name="BuildingCast" type="RayCast3D" parent="CameraHolder/Camera3D"]
+unique_name_in_owner = true
+transform = Transform3D(1, 8.74228e-08, -8.74228e-08, -8.74228e-08, 1, -8.29485e-08, 8.74228e-08, 8.29485e-08, 1, 0, 0, 0)
+target_position = Vector3(0, 0, -5)
+collision_mask = 6537
+collide_with_areas = true
+debug_shape_custom_color = Color(0, 1, 0, 1)
+debug_shape_thickness = 1
+
+[node name="BuildingPoint" type="Node3D" parent="CameraHolder/Camera3D"]
+unique_name_in_owner = true
+transform = Transform3D(1, 8.74228e-08, -8.74228e-08, -8.74228e-08, 1, -8.29485e-08, 8.74228e-08, 8.29485e-08, 1, 0, 0, -5)
+
+[node name="RigHolder" type="Node3D" parent="CameraHolder"]
+script = ExtResource("5_fwk6d")
+viewmodelfov = 54.0
+
+[node name="Node3D" type="Node3D" parent="CameraHolder/RigHolder"]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, -1.65, 0)
+
+[node name="correct_fp_arms" type="Node3D" parent="CameraHolder/RigHolder/Node3D"]
+visible = false
+
+[node name="arms_armature" type="Node3D" parent="CameraHolder/RigHolder/Node3D/correct_fp_arms"]
+
+[node name="Skeleton3D" type="Skeleton3D" parent="CameraHolder/RigHolder/Node3D/correct_fp_arms/arms_armature"]
+bones/0/name = "spine.002"
+bones/0/parent = -1
+bones/0/rest = Transform3D(1, 0, 0, 0, 0.999494, 0.0318125, 0, -0.0318125, 0.999494, -4.2339e-09, 1.2929, -0.0004)
+bones/0/enabled = true
+bones/0/position = Vector3(-4.2339e-09, 1.2929, -0.0004)
+bones/0/rotation = Quaternion(-0.0159083, 0, 0, 0.999873)
+bones/0/scale = Vector3(1, 1, 1)
+bones/1/name = "spine.003"
+bones/1/parent = 0
+bones/1/rest = Transform3D(1, 0, 0, 0, 0.999995, -0.00325429, 0, 0.00325429, 0.999995, 4.44089e-16, 0.172888, 9.31323e-09)
+bones/1/enabled = true
+bones/1/position = Vector3(4.44089e-16, 0.172888, 9.31323e-09)
+bones/1/rotation = Quaternion(0.00162714, 0, 0, 0.999999)
+bones/1/scale = Vector3(1, 1, 1)
+bones/2/name = "shoulder.L"
+bones/2/parent = 1
+bones/2/rest = Transform3D(0.507095, 0.86189, 0.000529349, -0.024689, 0.0139119, 0.999598, 0.861537, -0.506904, 0.0283338, 0.0183, 0.137221, 0.0782509)
+bones/2/enabled = true
+bones/2/position = Vector3(0.0183, 0.137221, 0.0782509)
+bones/2/rotation = Quaternion(-0.605155, -0.345862, -0.356135, 0.622363)
+bones/2/scale = Vector3(1, 1, 1)
+bones/3/name = "upper_arm.L"
+bones/3/parent = 2
+bones/3/rest = Transform3D(-0.229601, 0.250677, 0.940449, -0.408776, 0.852072, -0.326918, -0.883281, -0.459494, -0.0931658, 0.00779154, 0.200791, -0.0203849)
+bones/3/enabled = true
+bones/3/position = Vector3(0.00779154, 0.200791, -0.0203849)
+bones/3/rotation = Quaternion(-0.10304, 0.315879, -0.785038, 0.522799)
+bones/3/scale = Vector3(1, 1, 1)
+bones/4/name = "forearm.L"
+bones/4/parent = 3
+bones/4/rest = Transform3D(0.994094, 0.1081, -0.00955458, -0.104384, 0.928406, -0.356604, -0.0296782, 0.355495, 0.934207, 3.78932e-08, 0.286215, -2.98023e-08)
+bones/4/enabled = true
+bones/4/position = Vector3(3.78932e-08, 0.286215, -2.98023e-08)
+bones/4/rotation = Quaternion(0.522003, 0.00437561, -0.155761, 0.838589)
+bones/4/scale = Vector3(1, 1, 1)
+bones/5/name = "hand.L"
+bones/5/parent = 4
+bones/5/rest = Transform3D(0.999429, 0.0335311, 0.00406021, -0.0336855, 0.998317, 0.0472, -0.00247071, -0.0473099, 0.998877, 1.6953e-08, 0.264079, 7.45058e-09)
+bones/5/enabled = true
+bones/5/position = Vector3(1.6953e-08, 0.264079, 7.45058e-09)
+bones/5/rotation = Quaternion(-0.0185778, 0.254322, 0.00618786, 0.966921)
+bones/5/scale = Vector3(1, 1, 1)
+bones/6/name = "palm.01.L"
+bones/6/parent = 5
+bones/6/rest = Transform3D(-0.194199, 0.138525, 0.971132, 0.188378, 0.97682, -0.101666, -0.962705, 0.163197, -0.215793, -0.00549151, 0.039659, 0.027655)
+bones/6/enabled = true
+bones/6/position = Vector3(-0.00549151, 0.039659, 0.027655)
+bones/6/rotation = Quaternion(0.105799, 0.772466, 0.0199137, 0.625865)
+bones/6/scale = Vector3(1, 1, 1)
+bones/7/name = "f_index.01.L"
+bones/7/parent = 6
+bones/7/rest = Transform3D(0.99583, 0.089629, -0.0170326, -0.0898877, 0.995838, -0.0150833, 0.0156098, 0.0165514, 0.999741, 5.00586e-08, 0.0569673, 5.05242e-08)
+bones/7/enabled = true
+bones/7/position = Vector3(0.000140633, 0.0577616, 0.000162012)
+bones/7/rotation = Quaternion(0.158479, -0.0148516, -0.0431815, 0.986306)
+bones/7/scale = Vector3(1, 1, 1)
+bones/8/name = "f_index.02.L"
+bones/8/parent = 7
+bones/8/rest = Transform3D(0.9978, -0.0577119, -0.0326335, 0.0493944, 0.975422, -0.214738, 0.0442243, 0.212654, 0.976126, -4.74975e-08, 0.0281904, 5.73928e-08)
+bones/8/enabled = true
+bones/8/position = Vector3(-4.74975e-08, 0.0281904, 5.73928e-08)
+bones/8/rotation = Quaternion(0.256158, -0.015052, 0.0295558, 0.966066)
+bones/8/scale = Vector3(1, 1, 1)
+bones/9/name = "f_index.03.L"
+bones/9/parent = 8
+bones/9/rest = Transform3D(0.998315, -0.016819, 0.0555399, 0.0190158, 0.999048, -0.039265, -0.0548267, 0.040255, 0.997684, 1.86265e-08, 0.0290594, -1.09896e-07)
+bones/9/enabled = true
+bones/9/position = Vector3(1.86265e-08, 0.0290594, -1.09896e-07)
+bones/9/rotation = Quaternion(0.170386, 0.0286449, 0.00469795, 0.98495)
+bones/9/scale = Vector3(1, 1, 1)
+bones/10/name = "thumb.01.L"
+bones/10/parent = 6
+bones/10/rest = Transform3D(0.195696, -0.635065, 0.747259, 0.754754, 0.584056, 0.298707, -0.626139, 0.505541, 0.593614, -0.00493245, -0.0124692, 0.011034)
+bones/10/enabled = true
+bones/10/position = Vector3(-0.00493245, -0.0124692, 0.011034)
+bones/10/rotation = Quaternion(0.0671288, 0.445743, 0.451072, 0.770287)
+bones/10/scale = Vector3(1, 1, 1)
+bones/11/name = "thumb.02.L"
+bones/11/parent = 10
+bones/11/rest = Transform3D(0.999375, -0.00870661, -0.0342615, -0.00507205, 0.923851, -0.382718, 0.0349847, 0.382653, 0.92323, -1.35042e-08, 0.0413043, -2.54251e-07)
+bones/11/enabled = true
+bones/11/position = Vector3(-1.35042e-08, 0.0413043, -2.54251e-07)
+bones/11/rotation = Quaternion(0.313271, 0.0297409, -0.126472, 0.940735)
+bones/11/scale = Vector3(1, 1, 1)
+bones/12/name = "thumb.03.L"
+bones/12/parent = 11
+bones/12/rest = Transform3D(0.999121, 0.0108352, -0.0405072, -0.0121966, 0.999364, -0.0335157, 0.0401183, 0.0339802, 0.998617, 8.49832e-08, 0.0334902, 6.70552e-08)
+bones/12/enabled = true
+bones/12/position = Vector3(8.49832e-08, 0.0334902, 6.70552e-08)
+bones/12/rotation = Quaternion(0.14085, 0.00257578, -0.139039, 0.980216)
+bones/12/scale = Vector3(1, 1, 1)
+bones/13/name = "palm.02.L"
+bones/13/parent = 5
+bones/13/rest = Transform3D(0.0129241, 0.112936, 0.993518, -0.00237376, 0.993602, -0.112914, -0.999914, -0.000899058, 0.0131095, -0.00860378, 0.0428563, 0.00725435)
+bones/13/enabled = true
+bones/13/position = Vector3(-0.00860378, 0.0428563, 0.00725435)
+bones/13/rotation = Quaternion(0.0394104, 0.70135, -0.0405694, 0.710569)
+bones/13/scale = Vector3(1, 1, 1)
+bones/14/name = "f_middle.01.L"
+bones/14/parent = 13
+bones/14/rest = Transform3D(0.999534, -0.00692834, 0.0297095, 0.00491408, 0.997718, 0.0673435, -0.0301082, -0.0671662, 0.997287, -1.95578e-08, 0.0556262, 1.03428e-07)
+bones/14/enabled = true
+bones/14/position = Vector3(-1.95578e-08, 0.0556262, 1.03428e-07)
+bones/14/rotation = Quaternion(0.175329, 0.0152535, -0.000220768, 0.984392)
+bones/14/scale = Vector3(1, 1, 1)
+bones/15/name = "f_middle.02.L"
+bones/15/parent = 14
+bones/15/rest = Transform3D(0.999175, -0.0158193, -0.0373899, 0.00857656, 0.982425, -0.186462, 0.0396825, 0.185988, 0.98175, 3.72529e-09, 0.0349107, -8.77772e-08)
+bones/15/enabled = true
+bones/15/position = Vector3(3.72529e-09, 0.0349107, -8.77772e-08)
+bones/15/rotation = Quaternion(0.298914, -0.0176553, 0.0100263, 0.954064)
+bones/15/scale = Vector3(1, 1, 1)
+bones/16/name = "f_middle.03.L"
+bones/16/parent = 15
+bones/16/rest = Transform3D(0.999111, -0.0066434, -0.0416194, 0.0044758, 0.998639, -0.0519598, 0.0419079, 0.0517274, 0.997781, -6.51926e-09, 0.0291956, 1.16852e-07)
+bones/16/enabled = true
+bones/16/position = Vector3(-6.51926e-09, 0.0291956, 1.16852e-07)
+bones/16/rotation = Quaternion(0.233633, -0.0198552, 0.00707415, 0.972096)
+bones/16/scale = Vector3(1, 1, 1)
+bones/17/name = "palm.03.L"
+bones/17/parent = 5
+bones/17/rest = Transform3D(0.0488883, 0.082627, 0.995381, -0.1222, 0.98958, -0.0761436, -0.991301, -0.117913, 0.058476, -0.00786889, 0.0406034, -0.0111369)
+bones/17/enabled = true
+bones/17/position = Vector3(-0.00786889, 0.0406034, -0.0111369)
+bones/17/rotation = Quaternion(-0.0144223, 0.685969, -0.0707234, 0.724042)
+bones/17/scale = Vector3(1, 1, 1)
+bones/18/name = "f_ring.01.L"
+bones/18/parent = 17
+bones/18/rest = Transform3D(0.998798, -0.0329908, 0.0362481, 0.0329463, 0.999455, 0.0018253, -0.0362886, -0.000628863, 0.999341, 0, 0.0563299, 9.54606e-09)
+bones/18/enabled = true
+bones/18/position = Vector3(0, 0.0563299, 9.54606e-09)
+bones/18/rotation = Quaternion(0.226939, 0.0214165, 0.0119278, 0.9736)
+bones/18/scale = Vector3(1, 1, 1)
+bones/19/name = "f_ring.02.L"
+bones/19/parent = 18
+bones/19/rest = Transform3D(0.998976, -0.0435225, -0.0123506, 0.0409546, 0.985965, -0.161852, 0.0192215, 0.161181, 0.986738, 4.19095e-09, 0.0355182, -7.72416e-08)
+bones/19/enabled = true
+bones/19/position = Vector3(4.19095e-09, 0.0355182, -7.72416e-08)
+bones/19/rotation = Quaternion(0.305717, -0.00288921, 0.0224411, 0.951854)
+bones/19/scale = Vector3(1, 1, 1)
+bones/20/name = "f_ring.03.L"
+bones/20/parent = 19
+bones/20/rest = Transform3D(1, -2.01124e-05, -0.000682752, -3.60762e-05, 0.996616, -0.0821975, 0.000682095, 0.0821975, 0.996616, -2.79397e-09, 0.0279782, -3.03844e-08)
+bones/20/enabled = true
+bones/20/position = Vector3(-2.79397e-09, 0.0279782, -3.03844e-08)
+bones/20/rotation = Quaternion(0.267467, -0.000333445, 7.38452e-05, 0.963567)
+bones/20/scale = Vector3(1, 1, 1)
+bones/21/name = "palm.04.L"
+bones/21/parent = 5
+bones/21/rest = Transform3D(0.123681, 0.13629, 0.982918, -0.241662, 0.964838, -0.103375, -0.962446, -0.224748, 0.152269, -0.00553803, 0.0361473, -0.0295663)
+bones/21/enabled = true
+bones/21/position = Vector3(-0.00553803, 0.0361473, -0.0295663)
+bones/21/rotation = Quaternion(-0.0405409, 0.649786, -0.126243, 0.748463)
+bones/21/scale = Vector3(1, 1, 1)
+bones/22/name = "f_pinky.01.L"
+bones/22/parent = 21
+bones/22/rest = Transform3D(0.997053, 0.00196513, -0.0766919, -0.0101187, 0.994307, -0.106073, 0.0760468, 0.106537, 0.991396, 1.21072e-08, 0.0538126, 1.37836e-07)
+bones/22/enabled = true
+bones/22/position = Vector3(1.21072e-08, 0.0538126, 1.37836e-07)
+bones/22/rotation = Quaternion(0.222158, -0.0382248, 0.00352324, 0.974255)
+bones/22/scale = Vector3(1, 1, 1)
+bones/23/name = "f_pinky.02.L"
+bones/23/parent = 22
+bones/23/rest = Transform3D(0.999641, 0.0244552, -0.0109393, -0.0251742, 0.997137, -0.0713048, 0.00916423, 0.0715546, 0.997395, -7.45058e-09, 0.0218436, -2.21655e-07)
+bones/23/enabled = true
+bones/23/position = Vector3(-7.45058e-09, 0.0218436, -2.21655e-07)
+bones/23/rotation = Quaternion(0.205129, -0.00706754, -0.0113804, 0.978643)
+bones/23/scale = Vector3(1, 1, 1)
+bones/24/name = "f_pinky.03.L"
+bones/24/parent = 23
+bones/24/rest = Transform3D(0.998397, -0.0493509, -0.027724, 0.0470117, 0.995727, -0.0794857, 0.0315282, 0.0780549, 0.99645, -2.98023e-08, 0.0229871, 5.96046e-08)
+bones/24/enabled = true
+bones/24/position = Vector3(-2.98023e-08, 0.0229871, 5.96046e-08)
+bones/24/rotation = Quaternion(0.20869, -0.0105136, 0.0262896, 0.977572)
+bones/24/scale = Vector3(1, 1, 1)
+bones/25/name = "shoulder.R"
+bones/25/parent = 1
+bones/25/rest = Transform3D(0.507095, -0.86189, -0.000529349, 0.024689, 0.0139119, 0.999598, -0.861537, -0.506904, 0.0283338, -0.0183, 0.137221, 0.0782509)
+bones/25/enabled = true
+bones/25/position = Vector3(-0.0183, 0.137221, 0.0782509)
+bones/25/rotation = Quaternion(-0.605155, 0.345862, 0.356135, 0.622363)
+bones/25/scale = Vector3(1, 1, 1)
+bones/26/name = "upper_arm.R"
+bones/26/parent = 25
+bones/26/rest = Transform3D(-0.229601, -0.250677, -0.940449, 0.408776, 0.852072, -0.326918, 0.883281, -0.459494, -0.0931657, -0.00779154, 0.200791, -0.0203848)
+bones/26/enabled = true
+bones/26/position = Vector3(-0.00779154, 0.200791, -0.0203848)
+bones/26/rotation = Quaternion(-0.196289, -0.290543, 0.734074, 0.581541)
+bones/26/scale = Vector3(1, 1, 1)
+bones/27/name = "forearm.R"
+bones/27/parent = 26
+bones/27/rest = Transform3D(0.994094, -0.1081, 0.00955456, 0.104384, 0.928406, -0.356604, 0.0296783, 0.355495, 0.934207, -3.39933e-08, 0.286215, -7.45058e-09)
+bones/27/enabled = true
+bones/27/position = Vector3(-3.39933e-08, 0.286215, -7.45058e-09)
+bones/27/rotation = Quaternion(0.572916, -0.00418255, 0.170953, 0.801576)
+bones/27/scale = Vector3(1, 1, 1)
+bones/28/name = "hand.R"
+bones/28/parent = 27
+bones/28/rest = Transform3D(0.999429, -0.0335311, -0.00406021, 0.0336856, 0.998317, 0.0472, 0.00247071, -0.0473099, 0.998877, 4.33356e-08, 0.264079, -1.86265e-09)
+bones/28/enabled = true
+bones/28/position = Vector3(4.33356e-08, 0.264079, -1.86265e-09)
+bones/28/rotation = Quaternion(-0.024536, 0.066949, -0.0714032, 0.994896)
+bones/28/scale = Vector3(1, 1, 1)
+bones/29/name = "palm.01.R"
+bones/29/parent = 28
+bones/29/rest = Transform3D(-0.194199, -0.138525, -0.971132, -0.188378, 0.97682, -0.101666, 0.962705, 0.163197, -0.215793, 0.0054916, 0.039659, 0.027655)
+bones/29/enabled = true
+bones/29/position = Vector3(0.0054916, 0.039659, 0.027655)
+bones/29/rotation = Quaternion(0.105799, -0.772466, -0.0199138, 0.625865)
+bones/29/scale = Vector3(1, 1, 1)
+bones/30/name = "f_index.01.R"
+bones/30/parent = 29
+bones/30/rest = Transform3D(0.99583, -0.0896291, 0.0170326, 0.0898878, 0.995838, -0.0150833, -0.0156099, 0.0165514, 0.999741, -2.84053e-08, 0.0569673, 1.77533e-08)
+bones/30/enabled = true
+bones/30/position = Vector3(9.7306e-05, 0.055672, -0.000824682)
+bones/30/rotation = Quaternion(0.334857, 0.0386178, 0.0262176, 0.941112)
+bones/30/scale = Vector3(1, 1, 1)
+bones/31/name = "f_index.02.R"
+bones/31/parent = 30
+bones/31/rest = Transform3D(0.9978, 0.0577118, 0.0326334, -0.0493944, 0.975422, -0.214738, -0.0442243, 0.212654, 0.976126, 2.00234e-08, 0.0281904, 2.46218e-08)
+bones/31/enabled = true
+bones/31/position = Vector3(2.00234e-08, 0.0281904, 2.46218e-08)
+bones/31/rotation = Quaternion(0.428184, 0.0268235, -0.0436486, 0.902238)
+bones/31/scale = Vector3(1, 1, 1)
+bones/32/name = "f_index.03.R"
+bones/32/parent = 31
+bones/32/rest = Transform3D(0.998315, 0.0168191, -0.05554, -0.0190159, 0.999048, -0.0392649, 0.0548267, 0.0402549, 0.997684, 2.42144e-08, 0.0290594, -1.72295e-07)
+bones/32/enabled = true
+bones/32/position = Vector3(2.42144e-08, 0.0290594, -1.72295e-07)
+bones/32/rotation = Quaternion(0.347668, -0.0127017, -0.012728, 0.937445)
+bones/32/scale = Vector3(1, 1, 1)
+bones/33/name = "thumb.01.R"
+bones/33/parent = 29
+bones/33/rest = Transform3D(0.195696, 0.635065, -0.747259, -0.754753, 0.584056, 0.298707, 0.626139, 0.505541, 0.593614, 0.00493246, -0.0124692, 0.011034)
+bones/33/enabled = true
+bones/33/position = Vector3(0.00493246, -0.0124692, 0.011034)
+bones/33/rotation = Quaternion(0.0444931, -0.448568, -0.411526, 0.79212)
+bones/33/scale = Vector3(1, 1, 1)
+bones/34/name = "thumb.02.R"
+bones/34/parent = 33
+bones/34/rest = Transform3D(0.999375, 0.00870669, 0.0342615, 0.00507198, 0.923851, -0.382718, -0.0349847, 0.382653, 0.92323, 1.18744e-08, 0.0413043, -1.50409e-07)
+bones/34/enabled = true
+bones/34/position = Vector3(1.18744e-08, 0.0413043, -1.50409e-07)
+bones/34/rotation = Quaternion(0.282454, 0.0146722, 0.0238139, 0.958873)
+bones/34/scale = Vector3(1, 1, 1)
+bones/35/name = "thumb.03.R"
+bones/35/parent = 34
+bones/35/rest = Transform3D(0.99912, -0.0108352, 0.0405072, 0.0121966, 0.999364, -0.0335156, -0.0401183, 0.0339802, 0.998617, -8.61473e-08, 0.0334902, 4.65661e-08)
+bones/35/enabled = true
+bones/35/position = Vector3(-8.61473e-08, 0.0334902, 4.65661e-08)
+bones/35/rotation = Quaternion(0.106738, 0.0225137, 0.0303261, 0.99357)
+bones/35/scale = Vector3(1, 1, 1)
+bones/36/name = "palm.02.R"
+bones/36/parent = 28
+bones/36/rest = Transform3D(0.0129241, -0.112936, -0.993518, 0.00237381, 0.993602, -0.112914, 0.999914, -0.000899106, 0.0131095, 0.00860384, 0.0428564, 0.00725434)
+bones/36/enabled = true
+bones/36/position = Vector3(0.00860384, 0.0428564, 0.00725434)
+bones/36/rotation = Quaternion(0.0394104, -0.70135, 0.0405694, 0.710569)
+bones/36/scale = Vector3(1, 1, 1)
+bones/37/name = "f_middle.01.R"
+bones/37/parent = 36
+bones/37/rest = Transform3D(0.999534, 0.00692835, -0.0297094, -0.00491408, 0.997718, 0.0673435, 0.0301082, -0.0671662, 0.997287, 1.86265e-09, 0.0556264, 4.41723e-08)
+bones/37/enabled = true
+bones/37/position = Vector3(1.86265e-09, 0.0556264, 4.41723e-08)
+bones/37/rotation = Quaternion(0.35701, -0.00313565, 0.0175768, 0.93393)
+bones/37/scale = Vector3(1, 1, 1)
+bones/38/name = "f_middle.02.R"
+bones/38/parent = 37
+bones/38/rest = Transform3D(0.999175, 0.0158193, 0.03739, -0.00857654, 0.982425, -0.186462, -0.0396825, 0.185988, 0.98175, 0, 0.0349107, 9.02219e-08)
+bones/38/enabled = true
+bones/38/position = Vector3(0, 0.0349107, 9.02219e-08)
+bones/38/rotation = Quaternion(0.473217, 0.0253174, 0.00270887, 0.880578)
+bones/38/scale = Vector3(1, 1, 1)
+bones/39/name = "f_middle.03.R"
+bones/39/parent = 38
+bones/39/rest = Transform3D(0.999111, 0.00664342, 0.0416193, -0.00447582, 0.998639, -0.0519599, -0.0419079, 0.0517274, 0.997781, -7.45058e-09, 0.0291956, -6.27042e-08)
+bones/39/enabled = true
+bones/39/position = Vector3(-7.45058e-09, 0.0291956, -6.27042e-08)
+bones/39/rotation = Quaternion(0.412485, 0.0290844, 0.00448984, 0.910489)
+bones/39/scale = Vector3(1, 1, 1)
+bones/40/name = "palm.03.R"
+bones/40/parent = 28
+bones/40/rest = Transform3D(0.0488883, -0.082627, -0.995381, 0.1222, 0.98958, -0.0761437, 0.991301, -0.117913, 0.058476, 0.00786886, 0.0406034, -0.0111369)
+bones/40/enabled = true
+bones/40/position = Vector3(0.00786886, 0.0406034, -0.0111369)
+bones/40/rotation = Quaternion(-0.0144222, -0.685969, 0.0707235, 0.724042)
+bones/40/scale = Vector3(1, 1, 1)
+bones/41/name = "f_ring.01.R"
+bones/41/parent = 40
+bones/41/rest = Transform3D(0.998798, 0.0329908, -0.036248, -0.0329463, 0.999455, 0.00182546, 0.0362885, -0.000629029, 0.999341, -3.72529e-09, 0.0563297, 1.00583e-07)
+bones/41/enabled = true
+bones/41/position = Vector3(-3.72529e-09, 0.0563297, 1.00583e-07)
+bones/41/rotation = Quaternion(0.402556, -0.0144201, 0.000490631, 0.915282)
+bones/41/scale = Vector3(1, 1, 1)
+bones/42/name = "f_ring.02.R"
+bones/42/parent = 41
+bones/42/rest = Transform3D(0.998976, 0.0435225, 0.0123506, -0.0409546, 0.985965, -0.161852, -0.0192215, 0.161181, 0.986738, 3.49246e-09, 0.0355183, -1.08383e-07)
+bones/42/enabled = true
+bones/42/position = Vector3(3.49246e-09, 0.0355183, -1.08383e-07)
+bones/42/rotation = Quaternion(0.476224, 0.00682436, -0.0136297, 0.879192)
+bones/42/scale = Vector3(1, 1, 1)
+bones/43/name = "f_ring.03.R"
+bones/43/parent = 42
+bones/43/rest = Transform3D(1, 2.0101e-05, 0.000682747, 3.60871e-05, 0.996616, -0.0821974, -0.000682089, 0.0821974, 0.996616, 1.58325e-08, 0.0279782, -2.09548e-07)
+bones/43/enabled = true
+bones/43/position = Vector3(1.58325e-08, 0.0279782, -2.09548e-07)
+bones/43/rotation = Quaternion(0.440542, 0.00879101, 0.00849367, 0.897649)
+bones/43/scale = Vector3(1, 1, 1)
+bones/44/name = "palm.04.R"
+bones/44/parent = 28
+bones/44/rest = Transform3D(0.123681, -0.13629, -0.982918, 0.241662, 0.964838, -0.103375, 0.962446, -0.224748, 0.152269, 0.005538, 0.0361474, -0.0295663)
+bones/44/enabled = true
+bones/44/position = Vector3(0.005538, 0.0361474, -0.0295663)
+bones/44/rotation = Quaternion(-0.0405409, -0.649786, 0.126243, 0.748463)
+bones/44/scale = Vector3(1, 1, 1)
+bones/45/name = "f_pinky.01.R"
+bones/45/parent = 44
+bones/45/rest = Transform3D(0.997053, -0.00196508, 0.0766919, 0.0101187, 0.994307, -0.106073, -0.0760469, 0.106537, 0.991396, -3.72529e-09, 0.0538125, 1.41561e-07)
+bones/45/enabled = true
+bones/45/position = Vector3(-3.72529e-09, 0.0538125, 1.41561e-07)
+bones/45/rotation = Quaternion(0.355522, 0.0277599, 0.00266956, 0.934252)
+bones/45/scale = Vector3(1, 1, 1)
+bones/46/name = "f_pinky.02.R"
+bones/46/parent = 45
+bones/46/rest = Transform3D(0.999641, -0.0244552, 0.0109393, 0.0251742, 0.997137, -0.0713048, -0.00916423, 0.0715546, 0.997395, -7.45058e-09, 0.0218437, 7.63685e-08)
+bones/46/enabled = true
+bones/46/position = Vector3(-7.45058e-09, 0.0218437, 7.63685e-08)
+bones/46/rotation = Quaternion(0.338955, -0.000830373, 0.0219212, 0.940547)
+bones/46/scale = Vector3(1, 1, 1)
+bones/47/name = "f_pinky.03.R"
+bones/47/parent = 46
+bones/47/rest = Transform3D(0.998397, 0.0493509, 0.027724, -0.0470117, 0.995727, -0.0794857, -0.0315282, 0.0780549, 0.99645, 2.23517e-08, 0.0229871, 0)
+bones/47/enabled = true
+bones/47/position = Vector3(2.23517e-08, 0.0229871, 0)
+bones/47/rotation = Quaternion(0.342121, -0.00267982, -0.0158971, 0.939518)
+bones/47/scale = Vector3(1, 1, 1)
+bones/48/name = "camera"
+bones/48/parent = 1
+bones/48/rest = Transform3D(1, 0, 0, 0, 0.0285596, 0.999592, 0, -0.999592, 0.0285596, -4.44089e-16, 0.233772, 0.00213573)
+bones/48/enabled = true
+bones/48/position = Vector3(-4.44089e-16, 0.233772, 0.00213573)
+bones/48/rotation = Quaternion(-0.696936, 0, 0, 0.717133)
+bones/48/scale = Vector3(1, 1, 1)
+bones/49/name = "IK_Handle_Arm.L"
+bones/49/parent = -1
+bones/49/rest = Transform3D(0.818232, 0.562138, -0.120403, -0.555599, 0.827038, 0.085548, 0.147667, -0.0031025, 0.989032, 0.657885, 1.30622, -0.0495042)
+bones/49/enabled = true
+bones/49/position = Vector3(0.171379, 1.51517, 0.429041)
+bones/49/rotation = Quaternion(-0.0358447, -0.0648, -0.464274, 0.88259)
+bones/49/scale = Vector3(1, 1, 1)
+bones/50/name = "Pole_Target_Elbow.L"
+bones/50/parent = -1
+bones/50/rest = Transform3D(-0.46242, 0, 0.886661, -0.886661, 0, -0.46242, 0, -1, 0, 0.441807, 1.45294, -0.522115)
+bones/50/enabled = true
+bones/50/position = Vector3(0.242477, 1.45294, -0.522115)
+bones/50/rotation = Quaternion(-0.366599, 0.604653, -0.604653, 0.366599)
+bones/50/scale = Vector3(1, 1, 1)
+bones/51/name = "IK_Handle_Arm.R"
+bones/51/parent = -1
+bones/51/rest = Transform3D(0.818232, -0.562138, 0.120403, 0.555599, 0.827038, 0.085548, -0.147667, -0.0031025, 0.989032, -0.657885, 1.30622, -0.0495042)
+bones/51/enabled = true
+bones/51/position = Vector3(-0.247514, 1.5269, 0.40768)
+bones/51/rotation = Quaternion(-0.0574355, 0.0467446, 0.760074, 0.645604)
+bones/51/scale = Vector3(1, 1, 1)
+bones/52/name = "Pole_Target_Elbow.R"
+bones/52/parent = -1
+bones/52/rest = Transform3D(-0.46242, 0, -0.886661, 0.886661, 0, -0.46242, 0, -1, 0, -0.441807, 1.45294, -0.522115)
+bones/52/enabled = true
+bones/52/position = Vector3(-0.130268, 1.45294, -0.522115)
+bones/52/rotation = Quaternion(-0.366599, -0.604653, 0.604653, 0.366599)
+bones/52/scale = Vector3(1, 1, 1)
+
+[node name="arms" type="MeshInstance3D" parent="CameraHolder/RigHolder/Node3D/correct_fp_arms/arms_armature/Skeleton3D"]
+cast_shadow = 0
+mesh = ExtResource("6_a0imf")
+skin = SubResource("Skin_jlae2")
+surface_material_override/0 = SubResource("ShaderMaterial_mujtk")
+
+[node name="AnimationPlayerFP" type="AnimationPlayer" parent="CameraHolder/RigHolder/Node3D/correct_fp_arms"]
+libraries = {
+"Axe_Player_Anims": ExtResource("7_u4bc2"),
+"FP_Armature": ExtResource("42_0yrtw"),
+"Pickaxe_Player_Anims": ExtResource("8_4v63h")
+}
+
+[node name="Item_pickaxe_animated" type="Node3D" parent="CameraHolder/RigHolder/Node3D" node_paths=PackedStringArray("animator")]
+visible = false
+script = ExtResource("6_an6qp")
+item_name = "Pickaxe"
+animator = NodePath("AnimationPlayerPickaxe")
+
+[node name="Pickaxe" type="Node3D" parent="CameraHolder/RigHolder/Node3D/Item_pickaxe_animated"]
+
+[node name="Skeleton3D" type="Skeleton3D" parent="CameraHolder/RigHolder/Node3D/Item_pickaxe_animated/Pickaxe"]
+bones/0/name = "Body"
+bones/0/parent = -1
+bones/0/rest = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+bones/0/enabled = true
+bones/0/position = Vector3(0.0319372, 1.43677, 0.499723)
+bones/0/rotation = Quaternion(0.168909, -0.660334, -0.0304849, 0.731095)
+bones/0/scale = Vector3(0.203522, 0.203522, 0.203522)
+
+[node name="Cylinder" type="MeshInstance3D" parent="CameraHolder/RigHolder/Node3D/Item_pickaxe_animated/Pickaxe/Skeleton3D"]
+cast_shadow = 0
+mesh = ExtResource("12_fkleo")
+skin = SubResource("Skin_illik")
+surface_material_override/0 = SubResource("ShaderMaterial_xspd5")
+
+[node name="AnimationPlayerPickaxe" type="AnimationPlayer" parent="CameraHolder/RigHolder/Node3D/Item_pickaxe_animated"]
+libraries = {
+"Pickaxe_Anims": ExtResource("12_2kaya")
+}
+
+[node name="Item_axe_animated" type="Node3D" parent="CameraHolder/RigHolder/Node3D" node_paths=PackedStringArray("animator")]
+visible = false
+script = ExtResource("6_an6qp")
+item_name = "Axe"
+animator = NodePath("AnimationPlayerAxe")
+
+[node name="Axe_001" type="Node3D" parent="CameraHolder/RigHolder/Node3D/Item_axe_animated"]
+transform = Transform3D(0.155443, 0, 0, 0, 0.155443, 0, 0, 0, 0.155443, -0.0141677, -0.0886093, 0)
+
+[node name="Skeleton3D" type="Skeleton3D" parent="CameraHolder/RigHolder/Node3D/Item_axe_animated/Axe_001"]
+bones/0/name = "Body"
+bones/0/parent = -1
+bones/0/rest = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+bones/0/enabled = true
+bones/0/position = Vector3(0.143167, 10.4807, 3.60826)
+bones/0/rotation = Quaternion(0.0771204, -0.633985, 0.054486, 0.767559)
+bones/0/scale = Vector3(1, 1, 1)
+
+[node name="Axe" type="MeshInstance3D" parent="CameraHolder/RigHolder/Node3D/Item_axe_animated/Axe_001/Skeleton3D"]
+cast_shadow = 0
+mesh = ExtResource("15_yc44n")
+skin = SubResource("Skin_u0wcu")
+surface_material_override/0 = SubResource("ShaderMaterial_x4ycf")
+
+[node name="AnimationPlayerAxe" type="AnimationPlayer" parent="CameraHolder/RigHolder/Node3D/Item_axe_animated"]
+libraries = {
+"Axe_Anims": ExtResource("15_1ws1i")
+}
+
+[node name="Item_M4_Rifle" type="Node3D" parent="CameraHolder/RigHolder/Node3D" node_paths=PackedStringArray("animator")]
+visible = false
+script = ExtResource("6_an6qp")
+item_name = "Assault Rifle"
+animator = NodePath("AnimationPlayerM4_Rifle")
+
+[node name="M4_Rifle" type="Node3D" parent="CameraHolder/RigHolder/Node3D/Item_M4_Rifle"]
+
+[node name="Skeleton3D" type="Skeleton3D" parent="CameraHolder/RigHolder/Node3D/Item_M4_Rifle/M4_Rifle"]
+bones/0/name = "Body_2"
+bones/0/parent = -1
+bones/0/rest = Transform3D(-2.38419e-07, -4.76837e-07, 1, 0.938353, -0.34568, 0, 0.34568, 0.938353, 4.76838e-07, 7.15512e-09, 0.0132001, -0.0367481)
+bones/0/enabled = true
+bones/0/position = Vector3(-0.128764, 1.3568, -0.22846)
+bones/0/rotation = Quaternion(0.622142, 0.336064, 0.622142, 0.336064)
+bones/0/scale = Vector3(1, 1, 1)
+bones/1/name = "Barrel"
+bones/1/parent = 0
+bones/1/rest = Transform3D(0.544966, -0.838458, -1.77361e-07, 0.838458, 0.544966, -4.44044e-07, 4.68968e-07, 9.32794e-08, 1, -0.120917, 0.238801, 3.0181e-08)
+bones/1/enabled = true
+bones/1/position = Vector3(-0.120917, 0.238801, 3.0181e-08)
+bones/1/rotation = Quaternion(1.52838e-07, -1.83844e-07, 0.476987, 0.87891)
+bones/1/scale = Vector3(1, 1, 1)
+bones/2/name = "Magazine"
+bones/2/parent = 0
+bones/2/rest = Transform3D(0.731555, 0.681782, -2.04402e-07, -0.681782, 0.731555, 2.52569e-07, 3.21729e-07, -4.54103e-08, 1, -0.15706, 0.0650177, 1.35959e-08)
+bones/2/enabled = true
+bones/2/position = Vector3(-0.15706, 0.0650179, 1.24235e-08)
+bones/2/rotation = Quaternion(-8.00614e-08, -1.41361e-07, -0.366364, 0.930472)
+bones/2/scale = Vector3(1, 1, 1)
+
+[node name="M4_Rifle_Mesh" type="MeshInstance3D" parent="CameraHolder/RigHolder/Node3D/Item_M4_Rifle/M4_Rifle/Skeleton3D"]
+cast_shadow = 0
+mesh = ExtResource("17_87spy")
+skin = SubResource("Skin_06u7v")
+surface_material_override/0 = SubResource("ShaderMaterial_j48hl")
+
+[node name="AnimationPlayerM4_Rifle" type="AnimationPlayer" parent="CameraHolder/RigHolder/Node3D/Item_M4_Rifle"]
+libraries = {
+"M4_Rifle_Anims": ExtResource("41_aeuon"),
+"Pickaxe_Anims": SubResource("AnimationLibrary_yqpty")
+}
+
+[node name="Item" parent="CameraHolder/RigHolder" node_paths=PackedStringArray("fp_items_array", "rig_holder", "fp_player_node", "fp_player_animator", "camera_holder", "player", "state_machine", "timer", "weapon_hud", "reticle", "crosshair", "aim_cast", "melee_cast", "building_cast", "building_point") instance=ExtResource("4_dcn20")]
+unique_name_in_owner = true
+transform = Transform3D(-0.652866, -0.671662, 0.350194, -0.719312, 0.694632, -0.00872654, -0.237395, -0.257596, -0.936636, 0.04, -0.61, -0.545)
+fp_items_array = [NodePath("../Node3D/Item_M4_Rifle"), NodePath("../Node3D/Item_pickaxe_animated"), NodePath("../Node3D/Item_axe_animated")]
+rig_holder = NodePath("..")
+fp_player_node = NodePath("../Node3D/correct_fp_arms")
+fp_player_animator = NodePath("../Node3D/correct_fp_arms/AnimationPlayerFP")
+camera_holder = NodePath("../..")
+player = NodePath("../../..")
+state_machine = NodePath("../../../StateMachine")
+timer = NodePath("../Timer")
+weapon_hud = NodePath("../../../CanvasLayer/Interface/Control/MarginContainer3/WeaponHud")
+reticle = NodePath("../../../CanvasLayer/Interface/Reticle")
+crosshair = NodePath("../../../CanvasLayer/Interface/Crosshair")
+aim_cast = NodePath("../../Camera3D/AimCast")
+melee_cast = NodePath("../../Camera3D/MeleeCast")
+building_cast = NodePath("../../Camera3D/BuildingCast")
+building_point = NodePath("../../Camera3D/BuildingPoint")
+
+[node name="Timer" type="Timer" parent="CameraHolder/RigHolder"]
+one_shot = true
+
+[node name="AnimPlayerState" type="AnimationPlayer" parent="."]
+unique_name_in_owner = true
+root_node = NodePath("../CameraHolder/RigHolder")
+libraries = {
+"": SubResource("AnimationLibrary_jnhb8"),
+"player_state": ExtResource("5_7m1j8")
+}
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+unique_name_in_owner = true
+visible = false
+
+[node name="Interface" type="Control" parent="CanvasLayer"]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 1
 
-[node name="Reticle" type="CenterContainer" parent="Interface" node_paths=PackedStringArray("reticle_lines", "player")]
+[node name="Crosshair" type="Control" parent="CanvasLayer/Interface"]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Top" type="Line2D" parent="CanvasLayer/Interface/Crosshair"]
+points = PackedVector2Array(0, -6, 0, -14)
+width = 1.5
+
+[node name="Right" type="Line2D" parent="CanvasLayer/Interface/Crosshair"]
+points = PackedVector2Array(14, 0, 6, 0)
+width = 1.5
+
+[node name="Bottom" type="Line2D" parent="CanvasLayer/Interface/Crosshair"]
+points = PackedVector2Array(0, 6, 0, 14)
+width = 1.5
+
+[node name="Left" type="Line2D" parent="CanvasLayer/Interface/Crosshair"]
+points = PackedVector2Array(-6, 0, -14, 0)
+width = 1.5
+
+[node name="Reticle" type="CenterContainer" parent="CanvasLayer/Interface" node_paths=PackedStringArray("state_machine", "reticle_lines", "player", "item_script")]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -308,28 +1053,14 @@ anchor_bottom = 0.5
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
-script = ExtResource("3_oi4b1")
-reticle_lines = [NodePath("Top"), NodePath("Right"), NodePath("Bottom"), NodePath("Left")]
-player = NodePath("../..")
-reticle_distance = 5.0
+script = ExtResource("5_8lwt1")
+state_machine = NodePath("../../../StateMachine")
+reticle_lines = [NodePath("../Crosshair/Top"), NodePath("../Crosshair/Right"), NodePath("../Crosshair/Bottom"), NodePath("../Crosshair/Left"), null, null]
+player = NodePath("../../..")
+item_script = NodePath("../../../CameraHolder/RigHolder/Item")
 
-[node name="Top" type="Line2D" parent="Interface/Reticle"]
-points = PackedVector2Array(0, -6, 0, -14)
-width = 2.0
-
-[node name="Right" type="Line2D" parent="Interface/Reticle"]
-points = PackedVector2Array(14, 0, 6, 0)
-width = 2.0
-
-[node name="Bottom" type="Line2D" parent="Interface/Reticle"]
-points = PackedVector2Array(0, 6, 0, 14)
-width = 2.0
-
-[node name="Left" type="Line2D" parent="Interface/Reticle"]
-points = PackedVector2Array(-6, 0, -14, 0)
-width = 2.0
-
-[node name="Debug" type="PanelContainer" parent="Interface"]
+[node name="Debug" type="PanelContainer" parent="CanvasLayer/Interface"]
+unique_name_in_owner = true
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 0
 offset_left = 15.0
@@ -338,18 +1069,506 @@ offset_right = 215.0
 offset_bottom = 55.0
 mouse_filter = 2
 theme = ExtResource("5_js7jf")
-script = ExtResource("5_c7tx3")
+script = ExtResource("7_6mltq")
 
-[node name="MarginContainer" type="MarginContainer" parent="Interface/Debug"]
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/Interface/Debug"]
 layout_mode = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Interface/Debug/MarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Interface/Debug/MarginContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 
-[node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("current_state")]
+[node name="Control" type="Control" parent="CanvasLayer/Interface"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+mouse_filter = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/Interface/Control"]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -90.0
+offset_right = 250.0
+grow_vertical = 0
+theme_override_constants/margin_left = 35
+theme_override_constants/margin_bottom = 35
+
+[node name="PlayerStats" parent="CanvasLayer/Interface/Control/MarginContainer" instance=ExtResource("9_bcxkl")]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(250, 90)
+layout_mode = 2
+size_flags_stretch_ratio = 5.0
+
+[node name="MarginContainer3" type="MarginContainer" parent="CanvasLayer/Interface/Control"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -137.0
+offset_top = -77.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_constants/margin_right = 60
+theme_override_constants/margin_bottom = 35
+
+[node name="WeaponHud" parent="CanvasLayer/Interface/Control/MarginContainer3" instance=ExtResource("12_2ffht")]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+size_flags_horizontal = 10
+size_flags_vertical = 10
+size_flags_stretch_ratio = 5.0
+
+[node name="InventoryInterface" type="Control" parent="CanvasLayer/Interface/Control" node_paths=PackedStringArray("player")]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 15.0
+mouse_filter = 1
+script = ExtResource("9_sd5qi")
+player = NodePath("../../../..")
+
+[node name="CraftMenuMargin" type="MarginContainer" parent="CanvasLayer/Interface/Control/InventoryInterface"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -542.5
+offset_top = -400.0
+offset_right = 542.5
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/margin_left = 765
+theme_override_constants/margin_bottom = 120
+
+[node name="CraftMenu" parent="CanvasLayer/Interface/Control/InventoryInterface/CraftMenuMargin" node_paths=PackedStringArray("player") instance=ExtResource("13_00r71")]
+unique_name_in_owner = true
+visible = false
+custom_minimum_size = Vector2(350, 460)
+layout_mode = 2
+player = NodePath("../../../../../..")
+
+[node name="MarginContainer3" type="MarginContainer" parent="CanvasLayer/Interface/Control/InventoryInterface"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -20.0
+offset_top = -17.0
+offset_right = 20.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/margin_left = 799
+theme_override_constants/margin_bottom = 120
+
+[node name="ExternalInventory" parent="CanvasLayer/Interface/Control/InventoryInterface/MarginContainer3" instance=ExtResource("10_51sge")]
+unique_name_in_owner = true
+visible = false
+self_modulate = Color(1, 1, 1, 0.509804)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+size_flags_stretch_ratio = 5.0
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/Interface/Control/InventoryInterface"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -20.0
+offset_top = -136.0
+offset_right = 20.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/margin_bottom = 120
+
+[node name="PlayerInventory" parent="CanvasLayer/Interface/Control/InventoryInterface/MarginContainer" instance=ExtResource("10_51sge")]
+unique_name_in_owner = true
+self_modulate = Color(1, 1, 1, 0.509804)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 8
+size_flags_stretch_ratio = 10.0
+
+[node name="MarginContainer2" type="MarginContainer" parent="CanvasLayer/Interface/Control"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -10.0
+offset_top = -55.0
+offset_right = 10.0
+grow_horizontal = 2
+grow_vertical = 0
+size_flags_horizontal = 6
+size_flags_vertical = 4
+size_flags_stretch_ratio = 5.0
+mouse_filter = 2
+theme_override_constants/margin_bottom = 35
+
+[node name="PlayerQuickSlot" parent="CanvasLayer/Interface/Control/MarginContainer2" instance=ExtResource("10_51sge")]
+unique_name_in_owner = true
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 8
+size_flags_stretch_ratio = 20.25
+
+[node name="GrabbedSlot" type="PanelContainer" parent="CanvasLayer/Interface/Control"]
+unique_name_in_owner = true
+visible = false
+modulate = Color(1, 1, 1, 0.788235)
+self_modulate = Color(1, 1, 1, 0)
+custom_minimum_size = Vector2(58, 58)
+layout_mode = 0
+offset_right = 64.0
+offset_bottom = 64.0
+size_flags_horizontal = 4
+size_flags_vertical = 6
+script = ExtResource("12_vifhc")
+
+[node name="ActiveSlotPanel" type="PanelContainer" parent="CanvasLayer/Interface/Control/GrabbedSlot"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_8m1o6")
+
+[node name="MarginContainer3" type="MarginContainer" parent="CanvasLayer/Interface/Control/GrabbedSlot"]
+layout_mode = 2
+theme_override_constants/margin_left = 3
+theme_override_constants/margin_top = 3
+theme_override_constants/margin_right = 3
+theme_override_constants/margin_bottom = 3
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/Interface/Control/GrabbedSlot/MarginContainer3"]
+unique_name_in_owner = true
+layout_mode = 2
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Amount" type="Label" parent="CanvasLayer/Interface/Control/GrabbedSlot/MarginContainer3"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 8
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 2
+theme_override_font_sizes/font_size = 16
+text = "x99"
+
+[node name="MarginContainer2" type="MarginContainer" parent="CanvasLayer/Interface/Control/GrabbedSlot"]
+layout_mode = 2
+theme_override_constants/margin_top = 2
+theme_override_constants/margin_right = 5
+
+[node name="SlotNumber" type="Label" parent="CanvasLayer/Interface/Control/GrabbedSlot/MarginContainer2"]
+unique_name_in_owner = true
+visible = false
+modulate = Color(1, 1, 1, 0.392157)
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 0
+theme_override_font_sizes/font_size = 12
+text = "1"
+
+[node name="InvItemInfoPanel" type="PanelContainer" parent="CanvasLayer/Interface/Control"]
+unique_name_in_owner = true
+visible = false
+custom_minimum_size = Vector2(400, 170)
+layout_mode = 0
+offset_right = 400.0
+offset_bottom = 170.0
+size_flags_vertical = 0
+theme_override_styles/panel = SubResource("StyleBoxFlat_3tcom")
+script = ExtResource("10_pwj6i")
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/Interface/Control/InvItemInfoPanel"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/Interface/Control/InvItemInfoPanel/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 10
+alignment = 1
+
+[node name="PanelContainer" type="PanelContainer" parent="CanvasLayer/Interface/Control/InvItemInfoPanel/MarginContainer/HBoxContainer"]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 10.0
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/Interface/Control/InvItemInfoPanel/MarginContainer/HBoxContainer/PanelContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Interface/Control/InvItemInfoPanel/MarginContainer/HBoxContainer/PanelContainer/MarginContainer"]
+layout_mode = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="CanvasLayer/Interface/Control/InvItemInfoPanel/MarginContainer/HBoxContainer/PanelContainer/MarginContainer/VBoxContainer"]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 2.0
+
+[node name="ItemHealth" type="ProgressBar" parent="CanvasLayer/Interface/Control/InvItemInfoPanel/MarginContainer/HBoxContainer/PanelContainer/MarginContainer/VBoxContainer/PanelContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_font_sizes/font_size = 10
+theme_override_styles/fill = SubResource("StyleBoxFlat_sfy83")
+value = 80.0
+show_percentage = false
+
+[node name="Label" type="Label" parent="CanvasLayer/Interface/Control/InvItemInfoPanel/MarginContainer/HBoxContainer/PanelContainer/MarginContainer/VBoxContainer/PanelContainer/ItemHealth"]
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_top = -11.5
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 7
+text = "QUALITY
+"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="PanelContainer3" type="PanelContainer" parent="CanvasLayer/Interface/Control/InvItemInfoPanel/MarginContainer/HBoxContainer/PanelContainer/MarginContainer/VBoxContainer"]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 20.0
+
+[node name="ItemIcon" type="TextureRect" parent="CanvasLayer/Interface/Control/InvItemInfoPanel/MarginContainer/HBoxContainer/PanelContainer/MarginContainer/VBoxContainer/PanelContainer3"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 15.0
+expand_mode = 1
+stretch_mode = 5
+
+[node name="AmmoCountPanel" type="PanelContainer" parent="CanvasLayer/Interface/Control/InvItemInfoPanel/MarginContainer/HBoxContainer/PanelContainer/MarginContainer/VBoxContainer/PanelContainer3/ItemIcon"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -40.0
+offset_top = -40.0
+grow_horizontal = 0
+grow_vertical = 0
+
+[node name="AmmoCount" type="Label" parent="CanvasLayer/Interface/Control/InvItemInfoPanel/MarginContainer/HBoxContainer/PanelContainer/MarginContainer/VBoxContainer/PanelContainer3/ItemIcon/AmmoCountPanel"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 1
+theme_override_font_sizes/font_size = 18
+text = "30"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="WeaponSlots" type="PanelContainer" parent="CanvasLayer/Interface/Control/InvItemInfoPanel/MarginContainer/HBoxContainer/PanelContainer/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 5.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Interface/Control/InvItemInfoPanel/MarginContainer/HBoxContainer/PanelContainer/MarginContainer/VBoxContainer/WeaponSlots"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="CanvasLayer/Interface/Control/InvItemInfoPanel/MarginContainer/HBoxContainer/PanelContainer/MarginContainer/VBoxContainer/WeaponSlots/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_font_sizes/font_size = 7
+text = "Attachments"
+horizontal_alignment = 1
+uppercase = true
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/Interface/Control/InvItemInfoPanel/MarginContainer/HBoxContainer/PanelContainer/MarginContainer/VBoxContainer/WeaponSlots/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+alignment = 1
+
+[node name="Slot" parent="CanvasLayer/Interface/Control/InvItemInfoPanel/MarginContainer/HBoxContainer/PanelContainer/MarginContainer/VBoxContainer/WeaponSlots/VBoxContainer/HBoxContainer" instance=ExtResource("13_6ejrl")]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_27v0r")
+
+[node name="Slot2" parent="CanvasLayer/Interface/Control/InvItemInfoPanel/MarginContainer/HBoxContainer/PanelContainer/MarginContainer/VBoxContainer/WeaponSlots/VBoxContainer/HBoxContainer" instance=ExtResource("13_6ejrl")]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_27v0r")
+
+[node name="Slot3" parent="CanvasLayer/Interface/Control/InvItemInfoPanel/MarginContainer/HBoxContainer/PanelContainer/MarginContainer/VBoxContainer/WeaponSlots/VBoxContainer/HBoxContainer" instance=ExtResource("13_6ejrl")]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_27v0r")
+
+[node name="Slot4" parent="CanvasLayer/Interface/Control/InvItemInfoPanel/MarginContainer/HBoxContainer/PanelContainer/MarginContainer/VBoxContainer/WeaponSlots/VBoxContainer/HBoxContainer" instance=ExtResource("13_6ejrl")]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_27v0r")
+
+[node name="TabContainer" type="TabContainer" parent="CanvasLayer/Interface/Control/InvItemInfoPanel/MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 15.0
+theme_override_constants/side_margin = 0
+theme_override_constants/icon_max_width = 0
+theme_override_constants/outline_size = 0
+theme_override_font_sizes/font_size = 16
+
+[node name="Details" type="TabBar" parent="CanvasLayer/Interface/Control/InvItemInfoPanel/MarginContainer/HBoxContainer/TabContainer"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Interface/Control/InvItemInfoPanel/MarginContainer/HBoxContainer/TabContainer/Details"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ItemName" type="Label" parent="CanvasLayer/Interface/Control/InvItemInfoPanel/MarginContainer/HBoxContainer/TabContainer/Details/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.0
+theme_override_font_sizes/font_size = 14
+text = "Assault Rifle"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/Interface/Control/InvItemInfoPanel/MarginContainer/HBoxContainer/TabContainer/Details/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 15.0
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="PanelContainer" type="PanelContainer" parent="CanvasLayer/Interface/Control/InvItemInfoPanel/MarginContainer/HBoxContainer/TabContainer/Details/VBoxContainer/MarginContainer"]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/Interface/Control/InvItemInfoPanel/MarginContainer/HBoxContainer/TabContainer/Details/VBoxContainer/MarginContainer/PanelContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="ItemDescription" type="RichTextLabel" parent="CanvasLayer/Interface/Control/InvItemInfoPanel/MarginContainer/HBoxContainer/TabContainer/Details/VBoxContainer/MarginContainer/PanelContainer/MarginContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 2.0
+theme_override_font_sizes/normal_font_size = 10
+text = "The handy short automatic rifle with supressor and sight.
+
+Ammo type: 5.45 mm
+Damage head: 60 hp
+Damage body: 25 hp
+Damage arms: 15 hp
+Damage legs: 15 hps
+Shoot types: auto, single, burst"
+
+[node name="Actions" type="TabBar" parent="CanvasLayer/Interface/Control/InvItemInfoPanel/MarginContainer/HBoxContainer/TabContainer"]
+visible = false
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Interface/Control/InvItemInfoPanel/MarginContainer/HBoxContainer/TabContainer/Actions"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/Interface/Control/InvItemInfoPanel/MarginContainer/HBoxContainer/TabContainer/Actions/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 3.2
+theme_override_constants/margin_left = 15
+theme_override_constants/margin_top = 15
+theme_override_constants/margin_right = 15
+theme_override_constants/margin_bottom = 15
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Interface/Control/InvItemInfoPanel/MarginContainer/HBoxContainer/TabContainer/Actions/VBoxContainer/MarginContainer"]
+layout_mode = 2
+
+[node name="ItemUseButton" type="Button" parent="CanvasLayer/Interface/Control/InvItemInfoPanel/MarginContainer/HBoxContainer/TabContainer/Actions/VBoxContainer/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 30)
+layout_mode = 2
+focus_mode = 0
+theme_override_font_sizes/font_size = 12
+theme_override_styles/normal = SubResource("StyleBoxFlat_hi0ux")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_xqr46")
+text = "Use
+"
+
+[node name="WeaponUnloadButton" type="Button" parent="CanvasLayer/Interface/Control/InvItemInfoPanel/MarginContainer/HBoxContainer/TabContainer/Actions/VBoxContainer/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 30)
+layout_mode = 2
+focus_mode = 0
+theme_override_font_sizes/font_size = 12
+theme_override_styles/normal = SubResource("StyleBoxFlat_hi0ux")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_xqr46")
+text = "Unload"
+
+[node name="ItemDropButton" type="Button" parent="CanvasLayer/Interface/Control/InvItemInfoPanel/MarginContainer/HBoxContainer/TabContainer/Actions/VBoxContainer/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 30)
+layout_mode = 2
+focus_mode = 0
+theme_override_font_sizes/font_size = 12
+theme_override_styles/normal = SubResource("StyleBoxFlat_hi0ux")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_xqr46")
+text = "Drop"
+
+[node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("current_state", "debug_ui")]
 script = ExtResource("6_28k2k")
 current_state = NodePath("Idle")
+debug_ui = NodePath("../CanvasLayer/Interface/Debug")
 
 [node name="Idle" type="Node" parent="StateMachine"]
 script = ExtResource("7_pfe0v")
@@ -360,8 +1579,38 @@ script = ExtResource("8_w2o86")
 [node name="Sprint" type="Node" parent="StateMachine"]
 script = ExtResource("9_touqc")
 
-[node name="Crouch" type="Node" parent="StateMachine"]
+[node name="Crouch" type="Node" parent="StateMachine" node_paths=PackedStringArray("animator")]
 script = ExtResource("10_0am0j")
+animator = NodePath("../../AnimPlayerState")
 
 [node name="Jump" type="Node" parent="StateMachine"]
 script = ExtResource("11_juquo")
+
+[node name="Falling" type="Node" parent="StateMachine"]
+script = ExtResource("21_h51by")
+
+[node name="Label3D" type="Label3D" parent="."]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.45884, 0)
+visible = false
+billboard = 1
+double_sided = false
+outline_modulate = Color(0, 0, 0, 0)
+text = "Player"
+font_size = 96
+
+[connection signal="signal_update_player_health" from="." to="CanvasLayer/Interface/Control/MarginContainer/PlayerStats" method="_on_player_signal_update_player_health"]
+[connection signal="signal_update_player_hunger" from="." to="CanvasLayer/Interface/Control/MarginContainer/PlayerStats" method="_on_player_signal_update_player_hunger"]
+[connection signal="signal_update_player_stats" from="." to="CanvasLayer/Interface/Control/MarginContainer/PlayerStats" method="_on_player_signal_update_player_stats"]
+[connection signal="animation_finished" from="CameraHolder/RigHolder/Node3D/Item_pickaxe_animated/AnimationPlayerPickaxe" to="CameraHolder/RigHolder/Item" method="_on_animation_player_pickaxe_animation_finished"]
+[connection signal="animation_finished" from="CameraHolder/RigHolder/Node3D/Item_axe_animated/AnimationPlayerAxe" to="CameraHolder/RigHolder/Item" method="_on_animation_player_axe_animation_finished"]
+[connection signal="animation_finished" from="CameraHolder/RigHolder/Node3D/Item_M4_Rifle/AnimationPlayerM4_Rifle" to="CameraHolder/RigHolder/Item" method="_on_animation_player_m_4_rifle_animation_finished"]
+[connection signal="Update_Ammo" from="CameraHolder/RigHolder/Item" to="CanvasLayer/Interface/Control/MarginContainer3/WeaponHud" method="_on_item_update_ammo"]
+[connection signal="Update_Fire_Mode" from="CameraHolder/RigHolder/Item" to="CanvasLayer/Interface/Control/MarginContainer3/WeaponHud" method="_on_item_update_fire_mode"]
+[connection signal="gui_input" from="CanvasLayer/Interface/Control/InventoryInterface" to="CanvasLayer/Interface/Control/InventoryInterface" method="_on_gui_input"]
+[connection signal="signal_item_info_panel_set_data" from="CanvasLayer/Interface/Control/InventoryInterface" to="CanvasLayer/Interface/Control/InvItemInfoPanel" method="_on_inventory_interface_signal_item_info_panel_set_data"]
+[connection signal="visibility_changed" from="CanvasLayer/Interface/Control/InventoryInterface" to="CanvasLayer/Interface/Control/InventoryInterface" method="_on_visibility_changed"]
+[connection signal="gui_input" from="CanvasLayer/Interface/Control/GrabbedSlot" to="CanvasLayer/Interface/Control/GrabbedSlot" method="_on_gui_input"]
+[connection signal="mouse_entered" from="CanvasLayer/Interface/Control/GrabbedSlot" to="CanvasLayer/Interface/Control/GrabbedSlot" method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="CanvasLayer/Interface/Control/GrabbedSlot" to="CanvasLayer/Interface/Control/GrabbedSlot" method="_on_mouse_exited"]
+[connection signal="pressed" from="CanvasLayer/Interface/Control/InvItemInfoPanel/MarginContainer/HBoxContainer/TabContainer/Actions/VBoxContainer/MarginContainer/VBoxContainer/ItemDropButton" to="CanvasLayer/Interface/Control/InventoryInterface" method="_on_item_drop_button_pressed"]

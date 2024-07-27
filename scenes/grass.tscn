@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://bvly55g23t1rh"]
+
+[node name="grass_px_1" type="Node3D"]
+
+[node name="grass_px" type="MeshInstance3D" parent="."]
+cast_shadow = 0
