@@ -29,3 +29,14 @@ enum WeaponType {
 @export var icon: Texture
 
 @export var dictionary: Dictionary
+
+
+func serialize_item_data() -> Dictionary:
+	return {
+		"quality": quality
+	}
+
+static func deserialize_item_data(data: Dictionary) -> ItemData:
+	var item_data = ItemData.new()
+	item_data.quality = data["quality"]
+	return item_data

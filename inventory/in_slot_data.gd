@@ -30,3 +30,9 @@ func _set_amount(value : int):
 	if amount_in_slot > 1 and not item.stackable:
 		amount_in_slot = 1
 		push_error("%s is not stackable item" % item.name)
+
+
+func serialize_data() -> Dictionary:
+	return {
+		"amount_in_slot": amount_in_slot,
+	}
