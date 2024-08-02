@@ -32,6 +32,8 @@ var fp_item_animator: AnimationPlayer
 @export var building_point: Node3D
 #
 
+@export var audio_queue : Node3D
+
 # информация о предмете в руках в данный момент
 var equiped_item_node: Node3D = null # нода оружия (для того чтобы не проходится по массиву каждый раз)
 var equiped_slot: InSlotData = null # слот, который в данный момент выбран
@@ -343,6 +345,7 @@ func apply_recoil(delta) -> void:
 func shoot() -> void:
 	if not is_multiplayer_authority():
 		return
+	audio_queue.play_sound()
 	randomize_aimcast_spread()
 	hitscan(aim_cast)
 	update_weapon_ammo( - 1) # отнимаем current ammo и обновляем худ
@@ -381,7 +384,7 @@ func hitscan(raycast: RayCast3D) -> void:
 			side = Vector3(0, 1, 0)
 		decal.look_at(ray_end_point + raycast.get_collision_normal(), side)
 	if target:
-		if raycast == melee_cast and equiped_item.ItemType. tool:
+		if raycast == melee_cast and equiped_item.ItemType.tool:
 			if target.is_in_group("world_resource"):
 				if equiped_item.tool_type == equiped_item.ToolType.pickaxe and target.is_in_group("stone_object"):
 					target.health -= randf_range(equiped_item.damage, equiped_item.damage * 2)

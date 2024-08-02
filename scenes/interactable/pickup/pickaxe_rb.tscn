@@ -1,55 +1,18 @@
-[gd_scene load_steps=16 format=3 uid="uid://sk2v3l3djkvl"]
+[gd_scene load_steps=9 format=3 uid="uid://sk2v3l3djkvl"]
 
 [ext_resource type="Script" path="res://inventory/item/item_interactable.gd" id="1_cft26"]
 [ext_resource type="ArrayMesh" uid="uid://hmgxq3s6kcv7" path="res://models/meshes/pickaxe.res" id="1_e3ayi"]
-[ext_resource type="Resource" uid="uid://bmm6m04e0tq2m" path="res://inventory/item/objects/resource_metal-bar.tres" id="2_diffk"]
-[ext_resource type="Script" path="res://inventory/craft_components.gd" id="3_eboer"]
-[ext_resource type="Resource" uid="uid://b01lsfitk54lv" path="res://inventory/item/objects/resource_branch.tres" id="4_3jmxv"]
-[ext_resource type="Texture2D" uid="uid://dy71vd1vnnutm" path="res://icons/pickaxe_icon.png" id="5_7rr3n"]
-[ext_resource type="Script" path="res://inventory/item/item_data_craftable_tools.gd" id="7_bd7lw"]
+[ext_resource type="Resource" uid="uid://cmhctfq2qq820" path="res://inventory/item/objects/pickaxe.tres" id="2_685im"]
 [ext_resource type="Script" path="res://inventory/in_slot_data.gd" id="8_jr624"]
 [ext_resource type="Material" uid="uid://c18viyo5nbpxg" path="res://materials/main_pallete.tres" id="9_52gya"]
 
-[sub_resource type="Resource" id="Resource_ddorj"]
-script = ExtResource("3_eboer")
-component = ExtResource("2_diffk")
-amount = 2
-
-[sub_resource type="Resource" id="Resource_t6tg5"]
-script = ExtResource("3_eboer")
-component = ExtResource("4_3jmxv")
-amount = 1
-
-[sub_resource type="Resource" id="Resource_p0w7c"]
-script = ExtResource("7_bd7lw")
-craft_components = Array[ExtResource("3_eboer")]([SubResource("Resource_ddorj"), SubResource("Resource_t6tg5")])
-item_type = 4
-tool_type = 0
-anim_activate = "Pickaxe_Anims/Pickaxe_Equip"
-anim_hit = "Pickaxe_Anims/Pickaxe_Hit"
-anim_after_hit = "Pickaxe_Anims/Pickaxe_After_Hit"
-anim_player_activate = "Pickaxe_Player_Anims/Pickaxe_Player_Equip"
-anim_player_hit = "Pickaxe_Player_Anims/Pickaxe_Player_Hit"
-anim_player_after_hit = "Pickaxe_Player_Anims/Pickaxe_Player_After_Hit"
-damage = 15
-name = "Pickaxe"
-description = "Pickaxe"
-description_item_panel = "Pickaxe"
-stackable = false
-max_stack = 0
-quality = 100.0
-icon = ExtResource("5_7rr3n")
-dictionary = {
-"dropped_item": "res://scenes/interactable/pickup/pickaxe_rb.tscn"
-}
-
 [sub_resource type="Resource" id="Resource_aohpx"]
 script = ExtResource("8_jr624")
-item = SubResource("Resource_p0w7c")
+item = ExtResource("2_685im")
 amount_in_slot = 1
 
-[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_ls6f3"]
-points = PackedVector3Array(0.0947843, 0.632638, 0.010498, 0.0947843, 0.632638, -0.0105081, 0.0870438, 0.632638, 0.0306377, 0.352411, 0.558211, 0.0422769, 0.352557, 0.558616, -0.0414043, 0.0870438, 0.632638, -0.0306642, 0.0722931, 0.632638, 0.048309, 0.100334, 0.587928, 0.0820005, 0.492616, 0.516202, 0.0322888, 0.492908, 0.517418, -0.0302228, 0.0517005, 0.632638, 0.062057, 0.0268726, 0.632638, 0.0707864, 0.100334, 0.587928, -0.0820107, 0.0268726, 0.632638, -0.0707965, 0.0517005, 0.632638, -0.0620671, 0.0722931, 0.632638, -0.0483192, 0.100334, 0.408142, 0.0820986, 0.745861, 0.394364, 0.00529958, 0.630776, 0.454473, 0.0175436, -0.000146091, 0.632638, 0.0737616, -0.000146091, 0.587928, 0.0834227, 0.631068, 0.456093, -0.0153469, 0.746007, 0.394904, -0.00475393, 0.100334, 0.408142, -0.0821088, -0.000146091, 0.587928, -0.0834329, -0.000146091, 0.632638, -0.0737881, -0.000146091, 0.408142, 0.0835045, -0.000146091, -0.747298, 0.0692988, 0.0252661, -0.747298, 0.0664871, 0.740311, 0.380586, 0.00477647, 0.0486335, -0.747298, 0.0582971, -0.0270187, 0.632638, 0.0707864, -0.10048, 0.587928, 0.0820005, -0.10048, 0.408142, 0.0820986, 0.740457, 0.381126, -0.00527704, 0.0252661, -0.747298, -0.0665136, -0.000146091, -0.747298, -0.0693253, -0.000146091, 0.408142, -0.0834983, -0.10048, 0.408142, -0.0821088, -0.10048, 0.587928, -0.0820107, -0.0270187, 0.632638, -0.0707965, -0.0254122, -0.747298, 0.0664871, 0.0679117, -0.747298, 0.0453829, 0.0817862, -0.747298, 0.0287905, 0.0890885, -0.747298, 0.00986045, 0.0890885, -0.747298, -0.0098706, -0.0518466, 0.632638, 0.062057, -0.352703, 0.558211, 0.0422769, -0.492762, 0.516202, 0.0322888, -0.630922, 0.454473, 0.0175436, -0.746007, 0.394364, 0.00529958, 0.0817862, -0.747298, -0.0288006, 0.0679117, -0.747298, -0.045393, 0.0486335, -0.747298, -0.0583236, -0.0254122, -0.747298, -0.0665136, -0.740603, 0.381126, -0.00527704, -0.746007, 0.394904, -0.00475393, -0.493054, 0.517418, -0.0302228, -0.352703, 0.558616, -0.0414043, -0.0518466, 0.632638, -0.0620671, -0.0487797, -0.747298, 0.0582971, -0.0725853, 0.632638, 0.048309, -0.087336, 0.632638, 0.0306377, -0.0949304, 0.632638, 0.010498, -0.631214, 0.456093, -0.0153469, -0.740457, 0.380586, 0.00477647, -0.0487797, -0.747298, -0.0583236, -0.0682039, -0.747298, -0.045393, -0.0819323, -0.747298, -0.0288006, -0.0892346, -0.747298, -0.0098706, -0.0949304, 0.632638, -0.0105081, -0.087336, 0.632638, -0.0306642, -0.0725853, 0.632638, -0.0483192, -0.0682039, -0.747298, 0.0453829, -0.0892346, -0.747298, 0.00986045, -0.0819323, -0.747298, 0.0287905)
+[sub_resource type="BoxShape3D" id="BoxShape3D_d58p0"]
+size = Vector3(1.415, 1.34, 0.225)
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_hasj8"]
 properties/0/path = NodePath(".:position")
@@ -74,7 +37,7 @@ surface_material_override/0 = ExtResource("9_52gya")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(0.55, 0, 0, 0, 0.55, 0, 0, 0, 0.55, 0, 0.0346748, 1.6463e-08)
-shape = SubResource("ConvexPolygonShape3D_ls6f3")
+shape = SubResource("BoxShape3D_d58p0")
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_hasj8")
