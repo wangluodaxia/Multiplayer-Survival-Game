@@ -483,6 +483,14 @@ debug_shape_thickness = 1
 unique_name_in_owner = true
 transform = Transform3D(1, 8.74228e-08, -8.74228e-08, -8.74228e-08, 1, -8.29485e-08, 8.74228e-08, 8.29485e-08, 1, 0, 0, -5)
 
+[node name="BuildingCastObjects" type="RayCast3D" parent="CameraHolder/Camera3D"]
+unique_name_in_owner = true
+transform = Transform3D(1, 8.74228e-08, -8.74228e-08, -8.74228e-08, 1, -8.29485e-08, 8.74228e-08, 8.29485e-08, 1, 0, 0, 0)
+target_position = Vector3(0, 0, -5)
+collision_mask = 6537
+debug_shape_custom_color = Color(0, 1, 0, 1)
+debug_shape_thickness = 1
+
 [node name="RigHolder" type="Node3D" parent="CameraHolder"]
 script = ExtResource("5_fwk6d")
 viewmodelfov = 54.0
@@ -951,8 +959,8 @@ bones/0/name = "Body_2"
 bones/0/parent = -1
 bones/0/rest = Transform3D(-2.38419e-07, -4.76837e-07, 1, 0.938353, -0.34568, 0, 0.34568, 0.938353, 4.76838e-07, 7.15512e-09, 0.0132001, -0.0367481)
 bones/0/enabled = true
-bones/0/position = Vector3(-0.128764, 1.3568, -0.22846)
-bones/0/rotation = Quaternion(0.622142, 0.336064, 0.622142, 0.336064)
+bones/0/position = Vector3(-0.128764, 1.4711, 0.219458)
+bones/0/rotation = Quaternion(0.202288, 0.677554, 0.202288, 0.677554)
 bones/0/scale = Vector3(1, 1, 1)
 bones/1/name = "Barrel"
 bones/1/parent = 0
